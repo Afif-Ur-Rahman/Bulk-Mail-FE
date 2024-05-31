@@ -6,6 +6,7 @@ import { validateSignupData } from "./Validation";
 const Signup = () => {
   const navigate = useNavigate();
   const base_url = import.meta.env.VITE_API_BASE_URL;
+  // const [userInfo, setUserInfo] = useState({ _id: "", name: "", email: "" });
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -49,13 +50,19 @@ const Signup = () => {
         body: JSON.stringify(payload),
       });
       const result = await response.json();
-      if (!result.ok) {
+      if (!result.success) {
         return setErrors((prevErrors) => ({
           ...prevErrors,
           email: result.data,
         }));
       }
-
+      localStorage.setItem("token", result.token);
+      // setUserInfo({
+      //   ...userInfo,
+      //   _id: result.data._id,
+      //   name: result.data.name,
+      //   email: result.data.email,
+      // });
       setFormData({ name: "", email: "", password: "" });
       navigate("/home");
     } catch (error) {

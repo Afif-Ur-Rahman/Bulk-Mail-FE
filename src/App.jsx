@@ -1,17 +1,38 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 import { Signup, Login, Home } from "./components/index";
 
-function App() {
+const App = () => {
+  return (
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
+  );
+};
+
+function AppRoutes() {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const [isToken, setIsToken] = useState(!!token);
+
+  useEffect(() => {
+    setIsToken(!!token === true ? true : false);
+  }, [token]);
+
+  useEffect(() => {
+    if (!isToken) {
+      navigate("/");
+    }
+  }, []);
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={<Login />} />
-          <Route path="/home" element={<Home />} />
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/" element={<Login />} />
+        {isToken && <Route path="/home" element={<Home />} />}
+      </Routes>
     </>
   );
 }

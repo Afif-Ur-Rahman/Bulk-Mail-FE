@@ -30,16 +30,12 @@ const Login = () => {
 
   const userLogin = async () => {
     const validData = validateLoginData(formData, setErrors);
-    console.log(validData);
     if (!validData) {
       return;
     }
 
     try {
       const payload = formData;
-
-      console.log("payload = ", payload);
-
       const response = await fetch(`${base_url}/login`, {
         method: "POST",
         headers: {
@@ -48,8 +44,14 @@ const Login = () => {
         body: JSON.stringify(payload),
       });
       const result = await response.json();
-      console.log("Success:", result);
-
+      if (!result.success) {
+        return setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: result.data.email || "",
+          password: result.data.password || ""
+        }));
+      }
+      localStorage.setItem("token", result.token);
       setFormData({ email: "", password: "" });
       navigate("/home");
     } catch (error) {
