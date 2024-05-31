@@ -12,7 +12,7 @@ const App = () => {
   );
 };
 
-function AppRoutes() {
+const AppRoutes = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [isToken, setIsToken] = useState(!!token);

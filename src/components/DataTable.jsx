@@ -1,11 +1,23 @@
 /* eslint-disable react/prop-types */
+import { useState } from "react";
 
-const DataTable = ({
-  handleSelectAll,
-  checkedItems,
-  filteredData,
-  handleCheckboxChange,
-}) => {
+const DataTable = ({ data, filteredData }) => {
+  const [checkedItems, setCheckedItems] = useState(
+    new Array(data.length).fill(false)
+  );
+
+  const handleSelectAll = (e) => {
+    const isChecked = e.target.checked;
+    setCheckedItems(new Array(data.length).fill(isChecked));
+  };
+
+  const handleCheckboxChange = (index) => {
+    const updatedCheckedItems = checkedItems.map((item, i) =>
+      i === index ? !item : item
+    );
+    setCheckedItems(updatedCheckedItems);
+  };
+
   return (
     <table className="min-w-full divide-y divide-gray-200 table-auto overflow-hidden">
       <thead className="bg-gray-50">
@@ -17,7 +29,7 @@ const DataTable = ({
                 type="checkbox"
                 className="border-gray-200 rounded text-blue-600 focus:ring-blue-500"
                 onChange={handleSelectAll}
-                checked={checkedItems.every(Boolean)}
+                checked={checkedItems?.every(Boolean)}
               />
               <label htmlFor="hs-table-search-checkbox-all" className="sr-only">
                 Checkbox
@@ -68,10 +80,10 @@ const DataTable = ({
               </div>
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-              {item.name}
+              {item.Year}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-              <a href={`mailto:${item.email}`}>{item.email}</a>
+              <a href={`mailto:${item.email}`}>{item.Value}</a>
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
               {item.jobTitle}
