@@ -1,7 +1,8 @@
 #root {
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
   text-align: center;
+  box-sizing: border-box;
 }
 
 html {
@@ -29,6 +30,14 @@ html {
 
   ::-webkit-scrollbar-thumb {
     background-color: #333;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  #collapseMenu {
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: translateY(0%) !important;
   }
 }
 

@@ -1,14 +1,16 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const DataTable = ({ data, filteredData }) => {
-  const [checkedItems, setCheckedItems] = useState(
-    new Array(data.length).fill(false)
-  );
+  const [checkedItems, setCheckedItems] = useState([]);
+
+  useEffect(() => {
+    setCheckedItems(new Array(data.length).fill(false));
+  }, [data]);
 
   const handleSelectAll = (e) => {
     const isChecked = e.target.checked;
-    setCheckedItems(new Array(data.length).fill(isChecked));
+    setCheckedItems(new Array(filteredData.length).fill(isChecked));
   };
 
   const handleCheckboxChange = (index) => {
@@ -29,7 +31,7 @@ const DataTable = ({ data, filteredData }) => {
                 type="checkbox"
                 className="border-gray-200 rounded text-blue-600 focus:ring-blue-500"
                 onChange={handleSelectAll}
-                checked={checkedItems?.every(Boolean)}
+                checked={checkedItems.every(Boolean)}
               />
               <label htmlFor="hs-table-search-checkbox-all" className="sr-only">
                 Checkbox
@@ -40,13 +42,13 @@ const DataTable = ({ data, filteredData }) => {
             scope="col"
             className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
           >
-            Name
+            First Name
           </th>
           <th
             scope="col"
             className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
           >
-            Email
+            Last Name
           </th>
           <th
             scope="col"
@@ -60,6 +62,36 @@ const DataTable = ({ data, filteredData }) => {
           >
             Company
           </th>
+          <th
+            scope="col"
+            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
+          >
+            Email
+          </th>
+          <th
+            scope="col"
+            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
+          >
+            Company Number
+          </th>
+          <th
+            scope="col"
+            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
+          >
+            Industry
+          </th>
+          <th
+            scope="col"
+            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
+          >
+            City
+          </th>
+          <th
+            scope="col"
+            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
+          >
+            Country
+          </th>
         </tr>
       </thead>
       <tbody className="divide-y divide-gray-200">
@@ -71,7 +103,7 @@ const DataTable = ({ data, filteredData }) => {
                   id={`checkbox-${index}`}
                   type="checkbox"
                   className="border-gray-200 rounded text-blue-600 focus:ring-blue-500"
-                  checked={checkedItems[index]}
+                  checked={checkedItems[index] || false}
                   onChange={() => handleCheckboxChange(index)}
                 />
                 <label htmlFor={`checkbox-${index}`} className="sr-only">
@@ -80,16 +112,31 @@ const DataTable = ({ data, filteredData }) => {
               </div>
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-              {item.Year}
+              {item["First Name"]}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-              <a href={`mailto:${item.email}`}>{item.Value}</a>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-              {item.jobTitle}
+              {item["Last Name"]}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-              {item.company}
+              {item["Job Title"]}
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+              {item.Company}
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+              <a href={`mailto:${item.Email}`}>{item.Email}</a>
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+              {item["Company Number"]}
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+              {item.Industry}
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+              {item.City}
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+              {item.Country}
             </td>
           </tr>
         ))}

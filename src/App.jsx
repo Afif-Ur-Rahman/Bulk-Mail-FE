@@ -2,11 +2,14 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
-import { Signup, Login, Home } from "./components/index";
+import { Signup, Login } from "./components";
+import Home from "./pages/Home/Home";
+import Header from "./components/header/Header";
 
 const App = () => {
   return (
     <BrowserRouter>
+      <Header />
       <AppRoutes />
     </BrowserRouter>
   );
@@ -35,6 +38,6 @@ const AppRoutes = () => {
       </Routes>
     </>
   );
-}
+};
 
 export default App;
