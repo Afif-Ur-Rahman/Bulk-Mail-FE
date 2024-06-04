@@ -1,26 +1,32 @@
 import { Link } from "react-router-dom";
+import Profile from "../../assets/logo.svg";
+import Menu from "./Menu";
+import {
+  LockIcon,
+  LogoutIcon,
+  MenuButtonIcon,
+  MenuIcon,
+} from "../../assets/Icons";
 import useHome from "../../pages/Home/useHome";
-import { useEffect, useState } from "react";
+import useHeader from "./useHeader";
 
 function Header() {
   const { handleLogout } = useHome();
-  const token = localStorage.getItem("token");
-  const [isToken, setIsToken] = useState(!!token);
-  const [miniMenu, setMiniMenu] = useState(false);
-
-  useEffect(() => {
-    setIsToken(!!token);
-  }, [token]);
+  const {
+    miniMenu,
+    setMiniMenu,
+    isToken,
+    selectedImage,
+    isOpen,
+    setIsOpen,
+    handleImageChange,
+  } = useHeader();
 
   return (
     <header className="flex shadow-md py-4 px-4 sm:px-10 bg-white min-h-[70px] tracking-wide relative w-full z-10">
       <div className="flex flex-wrap items-center justify-between gap-5 w-full">
-        <Link to="">
-          <img
-            src="https://readymadeui.com/readymadeui.svg"
-            alt="logo"
-            className="w-36"
-          />
+        <Link to="/home">
+          <img src={Profile} alt="logo" className="w-36" />
         </Link>
 
         <div
@@ -30,92 +36,114 @@ function Header() {
             opacity: miniMenu ? 1 : 0,
             visibility: miniMenu ? "visible" : "hidden",
             transform: miniMenu ? "translateY(0)" : "translateY(-100%)",
-            transition: "opacity 0.3s ease, transform 0.3s ease, visibility 0.3s",
+            transition:
+              "opacity 0.3s ease, transform 0.3s ease, visibility 0.3s",
           }}
         >
           <button
             id="toggleClose"
             className={`lg:hidden fixed rounded-full bg-white p-3`}
             onClick={() => setMiniMenu(false)}
-            style={{ top: '10px', right: '10px' }}
+            style={{ top: "10px", right: "10px" }}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 fill-black"
-              viewBox="0 0 320.591 320.591"
-            >
-              <path
-                d="M30.391 318.583a30.37 30.37 0 0 1-21.56-7.288c-11.774-11.844-11.774-30.973 0-42.817L266.643 10.665c12.246-11.459 31.462-10.822 42.921 1.424 10.362 11.074 10.966 28.095 1.414 39.875L51.647 311.295a30.366 30.366 0 0 1-21.256 7.288z"
-                data-original="#000000"
-              ></path>
-              <path
-                d="M287.9 318.583a30.37 30.37 0 0 1-21.257-8.806L8.83 51.963C-2.078 39.225-.595 20.055 12.143 9.146c11.369-9.736 28.136-9.736 39.504 0l259.331 257.813c12.243 11.462 12.876 30.679 1.414 42.922-.456.487-.927.958-1.414 1.414a30.368 30.368 0 0 1-23.078 7.288z"
-                data-original="#000000"
-              ></path>
-            </svg>
+            <MenuIcon />
           </button>
 
-          <ul className="lg:flex gap-x-5 max-lg:space-y-3">
-            <li className="mb-6 hidden max-lg:block">
-              <Link to="">
-                <img
-                  src="https://readymadeui.com/readymadeui.svg"
-                  alt="logo"
-                  className="w-36"
-                />
-              </Link>
-            </li>
-            <li className="max-lg:border-b border-gray-300 max-lg:py-3 px-3">
-              <Link
-                to=""
-                className="hover:text-[#007bff] text-[#007bff] block font-semibold text-[15px]"
-              >
-                Home
-              </Link>
-            </li>
-            <li className="max-lg:border-b border-gray-300 max-lg:py-3 px-3">
-              <Link
-                to=""
-                className="hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]"
-              >
-                Mail Templates
-              </Link>
-            </li>
-            <li className="max-lg:border-b border-gray-300 max-lg:py-3 px-3">
-              <Link
-                to=""
-                className="hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]"
-              >
-                About
-              </Link>
-            </li>
-          </ul>
+          {isToken && <Menu />}
         </div>
 
         <div className="flex max-lg:ml-auto space-x-3">
-          {!!isToken && <button
-            className="shadow bg-[#007bff] border-2 border-[#007bff] hover:bg-transparent hover:text-[#007bff] focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-1 transition-all ease-in-out duration-300"
-            type="button"
-            onClick={handleLogout}
+          <button
+            id="toggleOpen"
+            className="lg:hidden"
+            onClick={() => setMiniMenu(true)}
           >
-            Logout
-          </button>}
-
-          <button id="toggleOpen" className="lg:hidden" onClick={() => setMiniMenu(true)}>
-            <svg
-              className="w-7 h-7"
-              fill="#000"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                clipRule="evenodd"
-              ></path>
-            </svg>
+            <MenuButtonIcon />
           </button>
+
+          {isToken && (
+            <div
+              className="user cursor-pointer"
+              onClick={() => setIsOpen(true)}
+            >
+              <img
+                src={selectedImage}
+                alt="User Image"
+                width={"50px"}
+                height={"50px"}
+                className="w-12 h-12 object-cover rounded-full"
+              />
+            </div>
+          )}
         </div>
+
+        <nav
+          className={`bg-white shadow-xl h-screen fixed top-0 right-0 min-w-[250px] py-6 font-[sans-serif] overflow-auto ${
+            isOpen ? "block" : "hidden"
+          }`}
+        >
+          <button
+            id=""
+            className={`fixed rounded-full bg-white p-3 z-10`}
+            onClick={() => setIsOpen(false)}
+            style={{ top: "10px", right: "10px" }}
+          >
+            <MenuIcon />
+          </button>
+          <div className="relative flex flex-col h-full">
+            <h1 className="text-xl font-bold text-center text-[#007bff]">
+              Profile
+            </h1>
+
+            <div className="flex flex-col w-[90%] h-auto mx-auto mt-3">
+              <label className="flex items-center justify-center py-3 cursor-pointer rounded-md">
+                <div className="flex flex-col items-center">
+                  <img
+                    src={selectedImage}
+                    alt="Profile"
+                    className="w-24 h-24 object-cover rounded-full"
+                  />
+                </div>
+                <input
+                  type="file"
+                  id="profile-image"
+                  className="hidden"
+                  onChange={handleImageChange}
+                />
+              </label>
+              <h1 className="text-xl text-center">User</h1>
+            </div>
+
+            <ul className="flex flex-col w-full h-[85%] overflow-auto">
+              <li>
+                <Link
+                  to=""
+                  className="text-black text-sm flex items-center hover:text-[#007bff] hover:border-l-[5px] border-[#077bff] hover:bg-gray-100 px-8 py-4 transition-all"
+                >
+                  <LockIcon />
+                  <span>Change Password</span>
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  to=""
+                  className="text-black text-sm flex items-center hover:text-[#007bff] hover:border-l-[5px] border-[#077bff] hover:bg-gray-100 px-8 py-4 transition-all"
+                >
+                  <LogoutIcon />
+                  <span
+                    onClick={() => {
+                      handleLogout();
+                      setIsOpen(false);
+                    }}
+                  >
+                    Logout
+                  </span>
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </nav>
       </div>
     </header>
   );

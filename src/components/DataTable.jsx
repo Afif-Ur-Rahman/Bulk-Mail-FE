@@ -111,31 +111,31 @@ const DataTable = ({ data, filteredData }) => {
                 </label>
               </div>
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+            <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
               {item["First Name"]}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
               {item["Last Name"]}
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
               {item["Job Title"]}
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
               {item.Company}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
               <a href={`mailto:${item.Email}`}>{item.Email}</a>
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-              {item["Company Number"]}
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+              {item["Company Phone"]}
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
               {item.Industry}
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
               {item.City}
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
               {item.Country}
             </td>
           </tr>

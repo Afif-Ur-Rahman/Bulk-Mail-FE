@@ -1,17 +1,20 @@
 import DataTable from "../../components/DataTable";
 import "../../App.css";
 import useHome from "./useHome";
+import { Pagination } from "../../components";
 
 const Home = () => {
   const {
     handleUpload,
     handleFileChange,
-    setSearchQuery,
     filteredData,
     searchQuery,
     error,
     fileInputRef,
     data,
+    setSearchQuery,
+    pages,
+    handlePageChange,
   } = useHome();
   return (
     <>
@@ -79,6 +82,9 @@ const Home = () => {
             <div className="overflow-x-auto">
               <DataTable data={data} filteredData={filteredData} />
             </div>
+          </div>
+          <div className="flex items-center justify-center mx-auto my-8">
+            <Pagination totalPages={pages.totalPages} currentPage={pages.page} handlePageChange={handlePageChange} />
           </div>
         </div>
       </div>
