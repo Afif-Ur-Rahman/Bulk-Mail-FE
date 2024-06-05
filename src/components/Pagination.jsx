@@ -9,7 +9,6 @@ export function Pagination({ totalPages, currentPage, handlePageChange }) {
     return (
       <div className="flex items-center">
         <a
-          href="#"
           className={`mx-1 cursor-pointer text-sm font-semibold text-gray-900 ${currentPage === 1 ? 'cursor-not-allowed opacity-50' : ''}`}
           onClick={() => handlePageChange(currentPage - 1)}
         >

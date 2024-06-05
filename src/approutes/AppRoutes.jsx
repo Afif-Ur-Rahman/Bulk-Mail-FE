@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { Signup, Login } from "../components";
+import { Signup, Login, PassChange } from "../components";
 import Home from "../pages/Home/Home";
 
 const AppRoutes = () => {
@@ -26,6 +26,7 @@ const AppRoutes = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Login />} />
           {isToken && <Route path="/home" element={<Home />} />}
+          {isToken && <Route path="/passchange" element={<PassChange />} />}
         </Routes>
       </>
     );

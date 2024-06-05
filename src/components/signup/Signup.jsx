@@ -1,74 +1,15 @@
-/* eslint-disable react/no-unescaped-entities */
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { validateSignupData } from "./Validation";
+import useSignup from "./useSignup";
 
 const Signup = () => {
-  const navigate = useNavigate();
-  const base_url = import.meta.env.VITE_API_BASE_URL;
-  // const [userInfo, setUserInfo] = useState({ _id: "", name: "", email: "" });
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-  const [errors, setErrors] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-
-  const handleOnChange = (e) => {
-    e.preventDefault();
-    const { id, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: value,
-    }));
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [id]: "",
-    }));
-  };
-
-  const userSignup = async () => {
-    const validData = validateSignupData(formData, setErrors);
-    if (!validData) {
-      return;
-    }
-
-    try {
-      const payload = formData;
-
-      console.log("payload = ", payload);
-
-      const response = await fetch(`${base_url}/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-      const result = await response.json();
-      if (!result.success) {
-        return setErrors((prevErrors) => ({
-          ...prevErrors,
-          email: result.data,
-        }));
-      }
-      localStorage.setItem("token", result.token);
-      // setUserInfo({
-      //   ...userInfo,
-      //   _id: result.data._id,
-      //   name: result.data.name,
-      //   email: result.data.email,
-      // });
-      setFormData({ name: "", email: "", password: "" });
-      navigate("/home");
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
+  const {
+    Link,
+    errors,
+    handleOnChange,
+    userSignup,
+    formData,
+    selectedImage,
+    handleImageChange,
+  } = useSignup();
 
   return (
     <div className="absolute inset-0 flex items-center justify-center">
@@ -76,7 +17,27 @@ const Signup = () => {
         <h1 className="text-xl font-bold text-center mb-4 text-gray-700">
           Sign Up
         </h1>
-        <form className="flex flex-col w-full justify-center items-center mx-auto">
+        <form
+          className="flex flex-col w-full justify-center items-center mx-auto"
+          onSubmit={userSignup}
+        >
+          <div>
+            <label className="flex items-center justify-center py-3 cursor-pointer rounded-md">
+              <div className="flex flex-col items-center">
+                <img
+                  src={selectedImage}
+                  alt="Profile"
+                  className="w-24 h-24 object-cover rounded-full"
+                />
+              </div>
+              <input
+                type="file"
+                id="profile-image"
+                className="hidden"
+                onChange={handleImageChange}
+              />
+            </label>
+          </div>
           <div className="flex justify-center items-start flex-col mb-2">
             <div>
               <label
@@ -156,7 +117,7 @@ const Signup = () => {
           <div className="flex items-center justify-center flex-col">
             <button
               className="shadow bg-[#007bff] border-2 border-[#007bff] hover:bg-transparent hover:text-[#007bff] focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-1 transition-all ease-in-out duration-300"
-              onClick={userSignup}
+              type="submit"
             >
               Sign Up
             </button>

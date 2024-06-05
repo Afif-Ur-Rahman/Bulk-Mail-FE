@@ -1,4 +1,4 @@
-import DataTable from "../../components/DataTable";
+import DataTable from "../../components/dataTable/DataTable";
 import "../../App.css";
 import useHome from "./useHome";
 import { Pagination } from "../../components";
@@ -84,7 +84,11 @@ const Home = () => {
             </div>
           </div>
           <div className="flex items-center justify-center mx-auto my-8">
-            <Pagination totalPages={pages.totalPages} currentPage={pages.page} handlePageChange={handlePageChange} />
+            <Pagination
+              totalPages={pages.totalPages}
+              currentPage={pages.page}
+              handlePageChange={handlePageChange}
+            />
           </div>
         </div>
       </div>

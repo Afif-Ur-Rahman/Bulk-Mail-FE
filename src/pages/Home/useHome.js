@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const useHome = () => {
   const base_url = import.meta.env.VITE_API_BASE_URL;
@@ -13,8 +12,6 @@ const useHome = () => {
     page: 1,
     totalPages: 1,
   });
-
-  const navigate = useNavigate();
 
   const filteredData = data.filter((item) => {
     const query = searchQuery.toLowerCase();
@@ -66,11 +63,6 @@ const useHome = () => {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/");
-  };
-
   const getData = async () => {
     try {
       const response = await fetch(`${base_url}/getdata?page=${pages.page}`, {
@@ -80,9 +72,13 @@ const useHome = () => {
         },
       });
       const result = await response.json();
-  
+
       if (result.success) {
-        setPages({ ...pages, page: result.page, totalPages: result.totalPages });
+        setPages({
+          ...pages,
+          page: result.page,
+          totalPages: result.totalPages,
+        });
         setData(result.data);
       } else {
         console.error("Error fetching data:", result.data);
@@ -91,7 +87,7 @@ const useHome = () => {
       console.error("Error:", error);
     }
   };
-  
+
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= pages.totalPages) {
       setPages({ ...pages, page: newPage });
@@ -103,7 +99,6 @@ const useHome = () => {
   }, [pages.page]);
 
   return {
-    handleLogout,
     handleUpload,
     handleFileChange,
     filteredData,
