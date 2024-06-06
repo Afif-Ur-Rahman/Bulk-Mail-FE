@@ -1,17 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const useHome = () => {
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [file, setFile] = useState(null);
-  const [error, setError] = useState("");
-  const fileInputRef = useRef(null);
   const [pages, setPages] = useState({
     page: 1,
     totalPages: 1,
   });
+  const [form, setForm] = useState(false);
 
   const filteredData = data.filter((item) => {
     const query = searchQuery.toLowerCase();
@@ -27,41 +25,6 @@ const useHome = () => {
       item?.Country?.toLowerCase().includes(query)
     );
   });
-
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-    setError("");
-  };
-
-  const handleUpload = async () => {
-    if (!file) {
-      setError("Please select a CSV file.");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      const response = await fetch(`${base_url}/upload-csv`, {
-        method: "POST",
-        body: formData,
-      });
-
-      const result = await response.json();
-      if (result.success) {
-        if (fileInputRef.current) {
-          fileInputRef.current.value = "";
-        }
-        setFile(null);
-        setData(result.data);
-      } else {
-        setError("Failed to upload file");
-      }
-    } catch (error) {
-      setError("Error uploading file");
-    }
-  };
 
   const getData = async () => {
     try {
@@ -99,16 +62,15 @@ const useHome = () => {
   }, [pages.page]);
 
   return {
-    handleUpload,
-    handleFileChange,
     filteredData,
     searchQuery,
-    error,
-    fileInputRef,
     data,
+    setData,
     setSearchQuery,
     pages,
     handlePageChange,
+    form,
+    setForm,
   };
 };
 

@@ -2,19 +2,20 @@ import DataTable from "../../components/dataTable/DataTable";
 import "../../App.css";
 import useHome from "./useHome";
 import { Pagination } from "../../components";
+import AddData from "../../components/addData/AddData";
+import { AddIcon } from "../../assets/Icons";
 
 const Home = () => {
   const {
-    handleUpload,
-    handleFileChange,
     filteredData,
     searchQuery,
-    error,
-    fileInputRef,
     data,
+    setData,
     setSearchQuery,
     pages,
     handlePageChange,
+    form,
+    setForm,
   } = useHome();
   return (
     <>
@@ -56,27 +57,13 @@ const Home = () => {
                     </div>
                   </div>
                 </div>
-                <div className="m-1 file flex items-center justify-center">
-                  <div className="flex flex-col justify-center items-center">
-                    <input
-                      className="m-1"
-                      type="file"
-                      accept=".csv"
-                      onChange={handleFileChange}
-                      ref={fileInputRef}
-                    />
-                    {error && (
-                      <div className="text-red-500 text-sm mt-2">{error}</div>
-                    )}
-                  </div>
-                  <button
-                    className="shadow bg-[#007bff] border-2 border-[#007bff] hover:bg-transparent hover:text-[#007bff] focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-1 transition-all ease-in-out duration-300"
-                    type="button"
-                    onClick={handleUpload}
-                  >
-                    Add CSV File
-                  </button>
+                <div
+                  className="cursor-pointer flex items-center hover:text-[#007bff] transition-all"
+                  onClick={() => setForm(true)}
+                >
+                  <AddIcon />
                 </div>
+                {form && <AddData setData={setData} setForm={setForm} />}
               </div>
             </div>
             <div className="overflow-x-auto">

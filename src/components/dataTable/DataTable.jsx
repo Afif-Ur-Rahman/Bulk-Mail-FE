@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
+import { CheckIcon, CloseIcon, EditIcon } from "../../assets/Icons";
 
 const DataTable = ({ data, filteredData }) => {
   const [checkedItems, setCheckedItems] = useState([]);
@@ -92,6 +93,18 @@ const DataTable = ({ data, filteredData }) => {
           >
             Country
           </th>
+          <th
+            scope="col"
+            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
+          >
+            Status
+          </th>
+          <th
+            scope="col"
+            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
+          >
+            Actions
+          </th>
         </tr>
       </thead>
       <tbody className="divide-y divide-gray-200">
@@ -137,6 +150,14 @@ const DataTable = ({ data, filteredData }) => {
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
               {item.Country}
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+              {item.Status}
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+              <div className="flex items-center justify-between">
+                <EditIcon /> <CloseIcon /> <CheckIcon />
+              </div>
             </td>
           </tr>
         ))}
