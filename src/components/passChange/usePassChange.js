@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-function usePassChange() {
-  const navigate = useNavigate();
+function usePassChange(setPassChange) {
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const [formData, setFormData] = useState({
     email: "",
@@ -77,7 +75,7 @@ function usePassChange() {
             oldPassword: "",
             newPassword: "",
           });
-          navigate("/home");
+          setPassChange(false);
         }
       } catch (error) {
         console.error("Error:", error);
@@ -85,7 +83,7 @@ function usePassChange() {
       }
     }
   };
-  return { errors, handleOnChange, handlePassChange, formData, navigate };
+  return { errors, handleOnChange, handlePassChange, formData };
 }
 
 export default usePassChange;

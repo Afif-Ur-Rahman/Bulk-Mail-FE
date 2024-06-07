@@ -4,12 +4,26 @@ import { useEffect, useState } from "react";
 const useHome = () => {
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const [data, setData] = useState([]);
+  console.log("data = ", data);
   const [searchQuery, setSearchQuery] = useState("");
   const [pages, setPages] = useState({
     page: 1,
     totalPages: 1,
   });
   const [form, setForm] = useState(false);
+  const [editData, setEditData] = useState(false);
+  const [formData, setFormData] = useState({
+    "First Name": "",
+    "Last Name": "",
+    "Job Title": "",
+    Company: "",
+    Email: "",
+    "Company Phone": "",
+    Industry: "",
+    City: "",
+    Country: "",
+    Status: "",
+  });
 
   const filteredData = data.filter((item) => {
     const query = searchQuery.toLowerCase();
@@ -68,9 +82,14 @@ const useHome = () => {
     setData,
     setSearchQuery,
     pages,
+    setPages,
     handlePageChange,
     form,
     setForm,
+    editData,
+    setEditData,
+    formData,
+    setFormData,
   };
 };
 

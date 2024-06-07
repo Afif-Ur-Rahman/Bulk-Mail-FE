@@ -17,6 +17,8 @@ function Header() {
     MenuButtonIcon,
     MenuIcon,
     user,
+    passChange,
+    setPassChange,
   } = useHeader();
 
   return (
@@ -26,28 +28,30 @@ function Header() {
           <img src={Profile} alt="logo" className="w-36" />
         </Link>
 
-        {isToken && <div
-          id="collapseMenu"
-          className={`lg:block max-lg:fixed max-lg:bg-white max-lg:w-full max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto`}
-          style={{
-            opacity: miniMenu ? 1 : 0,
-            visibility: miniMenu ? "visible" : "hidden",
-            transform: miniMenu ? "translateY(0)" : "translateY(-100%)",
-            transition:
-              "opacity 0.3s ease, transform 0.3s ease, visibility 0.3s",
-          }}
-        >
-          <button
-            id="toggleClose"
-            className={`lg:hidden fixed rounded-full bg-white p-3`}
-            onClick={() => setMiniMenu(false)}
-            style={{ top: "10px", right: "10px" }}
+        {isToken && (
+          <div
+            id="collapseMenu"
+            className={`lg:block max-lg:fixed max-lg:bg-white max-lg:w-full max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto`}
+            style={{
+              opacity: miniMenu ? 1 : 0,
+              visibility: miniMenu ? "visible" : "hidden",
+              transform: miniMenu ? "translateY(0)" : "translateY(-100%)",
+              transition:
+                "opacity 0.3s ease, transform 0.3s ease, visibility 0.3s",
+            }}
           >
-            <MenuIcon />
-          </button>
+            <button
+              id="toggleClose"
+              className={`lg:hidden fixed rounded-full bg-white p-3`}
+              onClick={() => setMiniMenu(false)}
+              style={{ top: "10px", right: "10px" }}
+            >
+              <MenuIcon />
+            </button>
 
-          <Menu />
-        </div>}
+            <Menu />
+          </div>
+        )}
 
         {isToken && (
           <div className="flex max-lg:ml-auto space-x-3">
@@ -80,6 +84,8 @@ function Header() {
             setIsOpen={setIsOpen}
             selectedImage={user.image || selectedImage}
             Link={Link}
+            passChange={passChange}
+            setPassChange={setPassChange}
           />
         )}
       </div>

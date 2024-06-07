@@ -2,7 +2,8 @@
 import { useState, useEffect } from "react";
 import { CheckIcon, CloseIcon, EditIcon } from "../../assets/Icons";
 
-const DataTable = ({ data, filteredData }) => {
+const DataTable = ({ data, filteredData, setData, setEditData, setForm, setFormData }) => {
+  const base_url = import.meta.env.VITE_API_BASE_URL;
   const [checkedItems, setCheckedItems] = useState([]);
 
   useEffect(() => {
@@ -19,6 +20,29 @@ const DataTable = ({ data, filteredData }) => {
       i === index ? !item : item
     );
     setCheckedItems(updatedCheckedItems);
+  };
+
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      const response = await fetch(`${base_url}/${id}/status`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ Status: newStatus }),
+      });
+
+      if (response.ok) {
+        const updatedData = data.map((item) =>
+          item._id === id ? { ...item, Status: newStatus } : item
+        );
+        setData(updatedData);
+      } else {
+        console.error("Failed to update status");
+      }
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
   };
 
   return (
@@ -109,7 +133,7 @@ const DataTable = ({ data, filteredData }) => {
       </thead>
       <tbody className="divide-y divide-gray-200">
         {filteredData.map((item, index) => (
-          <tr key={index}>
+          <tr key={item._id}>
             <td className="py-3 ps-4">
               <div className="flex items-center h-5">
                 <input
@@ -156,7 +180,44 @@ const DataTable = ({ data, filteredData }) => {
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
               <div className="flex items-center justify-between">
-                <EditIcon /> <CloseIcon /> <CheckIcon />
+                <div
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setForm(true);
+                    setEditData(true);
+                    setFormData({
+                      "First Name": item["First Name"],
+                      "Last Name": item["Last Name"],
+                      "Job Title": item["Job Title"],
+                      Company: item.Company,
+                      Email: item.Email,
+                      "Company Phone": item["Company Phone"],
+                      Industry: item.Industry,
+                      City: item.City,
+                      Country: item.Country,
+                      Status: item.Status,
+                    });
+                  }}
+                >
+                  <EditIcon />
+                </div>
+                <div>
+                  {item.Status === "active" ? (
+                    <div
+                      className="cursor-pointer"
+                      onClick={() => handleStatusChange(item._id, "inactive")}
+                    >
+                      <CloseIcon />
+                    </div>
+                  ) : (
+                    <div
+                      className="cursor-pointer"
+                      onClick={() => handleStatusChange(item._id, "active")}
+                    >
+                      <CheckIcon />
+                    </div>
+                  )}
+                </div>
               </div>
             </td>
           </tr>

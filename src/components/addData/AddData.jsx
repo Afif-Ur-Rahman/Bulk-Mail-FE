@@ -2,22 +2,30 @@
 import { AddIcon, MenuIcon } from "../../assets/Icons";
 import useAddData from "./useAddData";
 
-const AddData = ({ setData, setForm }) => {
+const AddData = ({
+  setData,
+  setForm,
+  pages,
+  setPages,
+  editData,
+  setEditData,
+  formData,
+  setFormData,
+}) => {
   const {
     handleFileChange,
     handleOnChange,
     handleUpload,
-    formData,
-    setFormData,
     fileInputRef,
     error,
-  } = useAddData(setData);
+    handleEditData,
+  } = useAddData(setData, setForm, pages, setPages, setEditData, formData, setFormData);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <div className="backdrop-blur-sm bg-white bg-opacity-90 p-4 rounded-xl shadow-lg w-fit max-w-sm border-gray-400 border-solid border-2">
         <h1 className="text-xl font-bold text-center mb-4 text-gray-700">
-          Add Data
+          {editData ? "Update" : "Add"} Data
         </h1>
         <button
           className="fixed rounded-full bg-white p-3"
@@ -220,36 +228,38 @@ const AddData = ({ setData, setForm }) => {
             <button
               className="shadow bg-[#007bff] border-2 border-[#007bff] hover:bg-transparent hover:text-[#007bff] focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-1 transition-all ease-in-out duration-300"
               type="button"
-              onClick={() => handleUpload()}
+              onClick={() => (editData ? handleEditData() : handleUpload())}
             >
-              Add Data
+              {editData ? "Edit" : "Add"} Data
             </button>
-            <span> or </span>
-            <div className="file flex items-center justify-center">
-              <label className="flex items-center justify-center py-3 cursor-pointer rounded-md">
-                <div className="flex flex-col items-center">
-                  <a
-                    className="shadow bg-[#007bff] border-2 border-[#007bff] hover:bg-transparent hover:text-[#007bff] focus:shadow-outline focus:outline-none text-white font-bold p-2 rounded m-1 transition-all ease-in-out duration-300"
-                    type="button"
-                  >
-                    <div className="flex items-center">
-                      <AddIcon /> <div className="pl-1">Import CSV</div>
+            {!editData && (
+              <>
+                <span> or </span>
+                <div className="file flex items-center justify-center">
+                  <label className="flex items-center justify-center py-3 cursor-pointer rounded-md">
+                    <div className="flex flex-col items-center">
+                      <a
+                        className="shadow bg-[#007bff] border-2 border-[#007bff] hover:bg-transparent hover:text-[#007bff] focus:shadow-outline focus:outline-none text-white font-bold p-2 rounded m-1 transition-all ease-in-out duration-300"
+                        type="button"
+                      >
+                        <div className="flex items-center">
+                          <AddIcon /> <div className="pl-1">Import CSV</div>
+                        </div>
+                      </a>
                     </div>
-                  </a>
+                    <input
+                      className="m-1 hidden"
+                      type="file"
+                      accept=".csv"
+                      onChange={(e) => handleFileChange(e)}
+                      ref={fileInputRef}
+                    />
+                  </label>
                 </div>
-                <input
-                  className="m-1 hidden"
-                  type="file"
-                  accept=".csv"
-                  onChange={(e) => handleFileChange(e)}
-                  ref={fileInputRef}
-                />
-              </label>
-              {error && (
-                <div className="text-red-500 text-sm mt-2">{error}</div>
-              )}
-            </div>
+              </>
+            )}
           </div>
+          {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
         </form>
       </div>
     </div>

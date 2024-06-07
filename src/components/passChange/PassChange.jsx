@@ -1,11 +1,12 @@
+/* eslint-disable react/prop-types */
 import usePassChange from "./usePassChange";
 
-function PassChange() {
-  const {errors, handleOnChange, handlePassChange, formData, navigate} = usePassChange();
+function PassChange({setPassChange}) {
+  const {errors, handleOnChange, handlePassChange, formData} = usePassChange(setPassChange);
   
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center">
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <div className="backdrop-blur-sm bg-white bg-opacity-90 p-4 rounded-xl shadow-lg w-fit max-w-sm border-gray-400 border-solid border-2">
         <h1 className="text-xl font-bold text-center mb-4 text-gray-700">
           Change Password
@@ -98,7 +99,7 @@ function PassChange() {
               Change Password
             </button>
             <button className="shadow bg-[#007bff] border-2 border-[#007bff] hover:bg-transparent hover:text-[#007bff] focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-1 transition-all ease-in-out duration-300" 
-            onClick={() => navigate("/home")} >
+            onClick={() => setPassChange(false)} >
               Cancel
             </button>
           </div>

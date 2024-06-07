@@ -13,9 +13,14 @@ const Home = () => {
     setData,
     setSearchQuery,
     pages,
+    setPages,
     handlePageChange,
     form,
     setForm,
+    editData,
+    setEditData,
+    formData,
+    setFormData,
   } = useHome();
   return (
     <>
@@ -63,11 +68,30 @@ const Home = () => {
                 >
                   <AddIcon />
                 </div>
-                {form && <AddData setData={setData} setForm={setForm} />}
+                {form && (
+                  <AddData
+                    data={data}
+                    setData={setData}
+                    setForm={setForm}
+                    setPages={setPages}
+                    pages={pages}
+                    editData={editData}
+                    setEditData={setEditData}
+                    formData={formData}
+                    setFormData={setFormData}
+                  />
+                )}
               </div>
             </div>
             <div className="overflow-x-auto">
-              <DataTable data={data} filteredData={filteredData} />
+              <DataTable
+                data={data}
+                filteredData={filteredData}
+                setData={setData}
+                setEditData={setEditData}
+                setForm={setForm}
+                setFormData={setFormData}
+              />
             </div>
           </div>
           <div className="flex items-center justify-center mx-auto my-8">

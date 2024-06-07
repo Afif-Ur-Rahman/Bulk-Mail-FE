@@ -1,13 +1,15 @@
 /* eslint-disable react/prop-types */
 import { useAllContexts } from "../../context";
 import { MenuIcon, LockIcon, LogoutIcon } from "../../assets/Icons";
+import PassChange from "../passChange/PassChange";
 
 function ProfileSideBar({
   handleImageChange,
   handleLogout,
   setIsOpen,
   selectedImage,
-  Link,
+  passChange,
+  setPassChange,
 }) {
   const { user } = useAllContexts();
   return (
@@ -48,14 +50,16 @@ function ProfileSideBar({
 
         <ul className="flex flex-col w-full h-[85%] overflow-auto">
           <li>
-            <Link
-              to="/passchange"
+            <div
               className="text-black cursor-pointer text-sm flex items-center hover:text-[#007bff] hover:border-l-[5px] border-[#077bff] hover:bg-gray-100 px-8 py-4 transition-all"
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setPassChange(true);
+              }}
             >
               <LockIcon />
               <span>Change Password</span>
-            </Link>
+            </div>
+            {passChange && <PassChange setPassChange={setPassChange} />}
           </li>
 
           <li>

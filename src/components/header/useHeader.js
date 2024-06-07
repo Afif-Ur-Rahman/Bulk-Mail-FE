@@ -14,6 +14,7 @@ function useHeader() {
   const [miniMenu, setMiniMenu] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(user.image || Actor);
+  const [passChange, setPassChange] = useState(false);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -51,6 +52,8 @@ function useHeader() {
     MenuButtonIcon,
     MenuIcon,
     user,
+    passChange,
+    setPassChange,
   };
 }
 
