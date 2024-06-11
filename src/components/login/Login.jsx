@@ -3,7 +3,15 @@
 import useLogin from "./useLogin";
 
 const Login = () => {
-  const { Link, handleOnChange, userLogin, errors, formData } = useLogin();
+  const {
+    Link,
+    handleOnChange,
+    userLogin,
+    errors,
+    setErrors,
+    loginForm,
+    setLoginForm,
+  } = useLogin();
 
   return (
     <div className="absolute inset-0 flex items-center justify-center">
@@ -26,7 +34,7 @@ const Login = () => {
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#007bff]"
                 id="email"
                 type="text"
-                value={formData.email}
+                value={loginForm.email}
                 placeholder="Enter Email..."
                 onChange={handleOnChange}
               />
@@ -51,7 +59,7 @@ const Login = () => {
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#007bff]"
                 id="password"
                 type="password"
-                value={formData.password}
+                value={loginForm.password}
                 placeholder="Enter Password..."
                 onChange={handleOnChange}
               />
@@ -74,7 +82,20 @@ const Login = () => {
             <div>
               <p>
                 Don't have account?{" "}
-                <span>
+                <span
+                  onClick={() => {
+                    setErrors({
+                      name: "",
+                      email: "",
+                      password: "",
+                      file: "",
+                    });
+                    setLoginForm({
+                      email: "",
+                      password: "",
+                    });
+                  }}
+                >
                   <Link to="/signup" className="underline text-blue-700">
                     Signup
                   </Link>

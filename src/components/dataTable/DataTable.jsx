@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
+import { useAllContexts } from "../../context";
 import { useState, useEffect } from "react";
 import { CheckIcon, CloseIcon, EditIcon } from "../../assets/Icons";
 
-const DataTable = ({ data, filteredData, setData, setEditData, setForm, setFormData }) => {
+const DataTable = ({ filteredData, setEditData, setForm }) => {
+  const { data, setData, setAddDataForm } = useAllContexts();
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const [checkedItems, setCheckedItems] = useState([]);
 
@@ -185,7 +187,7 @@ const DataTable = ({ data, filteredData, setData, setEditData, setForm, setFormD
                   onClick={() => {
                     setForm(true);
                     setEditData(true);
-                    setFormData({
+                    setAddDataForm({
                       "First Name": item["First Name"],
                       "Last Name": item["Last Name"],
                       "Job Title": item["Job Title"],

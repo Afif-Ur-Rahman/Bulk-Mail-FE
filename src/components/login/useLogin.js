@@ -1,23 +1,16 @@
-import { useState } from "react";
+import { useAllContexts } from "../../context";
 import { useNavigate, Link } from "react-router-dom";
 import { validateLoginData } from "../Validation";
 
 function useLogin() {
+  const { loginForm, setLoginForm, errors, setErrors } = useAllContexts();
   const navigate = useNavigate();
   const base_url = import.meta.env.VITE_API_BASE_URL;
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-  });
 
   const handleOnChange = (e) => {
     e.preventDefault();
     const { id, value } = e.target;
-    setFormData((prevData) => ({
+    setLoginForm((prevData) => ({
       ...prevData,
       [id]: value,
     }));
@@ -28,13 +21,13 @@ function useLogin() {
   };
 
   const userLogin = async () => {
-    const validData = validateLoginData(formData, setErrors);
+    const validData = validateLoginData(loginForm, setErrors);
     if (!validData) {
       return;
     }
 
     try {
-      const payload = formData;
+      const payload = loginForm;
       const response = await fetch(`${base_url}/login`, {
         method: "POST",
         headers: {
@@ -51,7 +44,7 @@ function useLogin() {
         }));
       }
       localStorage.setItem("token", result.token);
-      setFormData({ email: "", password: "" });
+      setLoginForm({ email: "", password: "" });
       navigate("/home");
     } catch (error) {
       console.error("Error:", error);
@@ -62,7 +55,9 @@ function useLogin() {
     handleOnChange,
     userLogin,
     errors,
-    formData,
+    setErrors,
+    loginForm,
+    setLoginForm,
   };
 }
 

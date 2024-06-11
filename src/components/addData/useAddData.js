@@ -1,23 +1,24 @@
 /* eslint-disable no-unused-vars */
 import { useState, useRef } from "react";
+import { useAllContexts } from "../../context";
 
-const useAddData = (
-  setData,
-  setForm,
-  pages,
-  setPages,
-  setEditData,
-  formData,
-  setFormData
-) => {
+const useAddData = (setForm, setEditData) => {
+  const {
+    addDataForm,
+    setAddDataForm,
+    pages,
+    setPages,
+    setData,
+    errors,
+    setErrors,
+  } = useAllContexts();
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const [file, setFile] = useState(null);
-  const [error, setError] = useState("");
   const fileInputRef = useRef(null);
 
   const handleOnChange = (e) => {
     const { id, value } = e.target;
-    setFormData((prevData) => ({
+    setAddDataForm((prevData) => ({
       ...prevData,
       [id]: value,
     }));
@@ -32,7 +33,7 @@ const useAddData = (
   };
 
   const handleUpload = async (selectedFile) => {
-    const payload = selectedFile ? new FormData() : formData;
+    const payload = selectedFile ? new FormData() : addDataForm;
     if (selectedFile) payload.append("file", selectedFile);
 
     try {
@@ -55,7 +56,7 @@ const useAddData = (
         });
         setData(result.data);
         if (!selectedFile) {
-          setFormData({
+          setAddDataForm({
             "First Name": "",
             "Last Name": "",
             "Job Title": "",
@@ -70,12 +71,18 @@ const useAddData = (
         }
         setForm(false);
       } else {
-        setError(
-          selectedFile ? "Failed to upload file" : "Failed to Save Data"
+        setErrors(
+          selectedFile
+            ? { ...errors, file: "Failed to upload file" }
+            : { ...errors, file: "Failed to Save Data" }
         );
       }
     } catch (error) {
-      setError(selectedFile ? "Error uploading file" : "Failed to Save Data");
+      setErrors(
+        selectedFile
+          ? { ...errors, file: "Failed to upload file" }
+          : { ...errors, file: "Failed to Save Data" }
+      );
     }
   };
 
@@ -86,10 +93,12 @@ const useAddData = (
 
   return {
     handleFileChange,
-    error,
+    errors,
     handleOnChange,
     handleUpload,
     handleEditData,
+    addDataForm,
+    setAddDataForm,
   };
 };
 

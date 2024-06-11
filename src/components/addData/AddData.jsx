@@ -2,24 +2,17 @@
 import { AddIcon, MenuIcon } from "../../assets/Icons";
 import useAddData from "./useAddData";
 
-const AddData = ({
-  setData,
-  setForm,
-  pages,
-  setPages,
-  editData,
-  setEditData,
-  formData,
-  setFormData,
-}) => {
+const AddData = ({ setForm, editData, setEditData }) => {
   const {
     handleFileChange,
     handleOnChange,
     handleUpload,
     fileInputRef,
-    error,
+    errors,
     handleEditData,
-  } = useAddData(setData, setForm, pages, setPages, setEditData, formData, setFormData);
+    addDataForm,
+    setAddDataForm,
+  } = useAddData(setForm, setEditData);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
@@ -30,7 +23,7 @@ const AddData = ({
         <button
           className="fixed rounded-full bg-white p-3"
           onClick={() => {
-            setFormData({
+            setAddDataForm({
               "First Name": "",
               "Last Name": "",
               "Job Title": "",
@@ -61,8 +54,7 @@ const AddData = ({
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#007bff]"
                 id="First Name"
                 type="text"
-                value={formData["First Name"]}
-                placeholder="Enter First Name..."
+                value={addDataForm["First Name"]}
                 onChange={handleOnChange}
               />
             </div>
@@ -77,8 +69,7 @@ const AddData = ({
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#007bff]"
                 id="Last Name"
                 type="text"
-                value={formData["Last Name"]}
-                placeholder="Enter Last Name..."
+                value={addDataForm["Last Name"]}
                 onChange={handleOnChange}
               />
             </div>
@@ -95,8 +86,7 @@ const AddData = ({
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#007bff]"
                 id="Job Title"
                 type="text"
-                value={formData["Job Title"]}
-                placeholder="Enter Job Title..."
+                value={addDataForm["Job Title"]}
                 onChange={handleOnChange}
               />
             </div>
@@ -111,8 +101,7 @@ const AddData = ({
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#007bff]"
                 id="Company"
                 type="text"
-                value={formData.Company}
-                placeholder="Enter Company Name..."
+                value={addDataForm.Company}
                 onChange={handleOnChange}
               />
             </div>
@@ -129,8 +118,7 @@ const AddData = ({
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#007bff]"
                 id="Email"
                 type="text"
-                value={formData.Email}
-                placeholder="Enter Email..."
+                value={addDataForm.Email}
                 onChange={handleOnChange}
               />
             </div>
@@ -145,8 +133,7 @@ const AddData = ({
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#007bff]"
                 id="Company Phone"
                 type="text"
-                value={formData["Company Phone"]}
-                placeholder="Enter Company Number..."
+                value={addDataForm["Company Phone"]}
                 onChange={handleOnChange}
               />
             </div>
@@ -163,8 +150,7 @@ const AddData = ({
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#007bff]"
                 id="Industry"
                 type="text"
-                value={formData.Industry}
-                placeholder="Enter Industry Name..."
+                value={addDataForm.Industry}
                 onChange={handleOnChange}
               />
             </div>
@@ -179,8 +165,7 @@ const AddData = ({
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#007bff]"
                 id="City"
                 type="text"
-                value={formData.City}
-                placeholder="Enter City Name..."
+                value={addDataForm.City}
                 onChange={handleOnChange}
               />
             </div>
@@ -197,8 +182,7 @@ const AddData = ({
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#007bff]"
                 id="Country"
                 type="text"
-                value={formData.Country}
-                placeholder="Enter Country Name..."
+                value={addDataForm.Country}
                 onChange={handleOnChange}
               />
             </div>
@@ -212,7 +196,7 @@ const AddData = ({
               <select
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#007bff]"
                 id="Status"
-                value={formData.Status}
+                value={addDataForm.Status}
                 onChange={handleOnChange}
               >
                 <option value="" disabled>
@@ -259,7 +243,9 @@ const AddData = ({
               </>
             )}
           </div>
-          {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
+          {errors.file && (
+            <div className="text-red-500 text-sm mt-2">{errors.file}</div>
+          )}
         </form>
       </div>
     </div>

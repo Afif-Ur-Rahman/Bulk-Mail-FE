@@ -4,9 +4,11 @@ const Signup = () => {
   const {
     Link,
     errors,
+    setErrors,
     handleOnChange,
     userSignup,
-    formData,
+    signupForm,
+    setSignupForm,
     selectedImage,
     handleImageChange,
   } = useSignup();
@@ -52,7 +54,7 @@ const Signup = () => {
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#007bff]"
                 id="name"
                 type="text"
-                value={formData.name}
+                value={signupForm.name}
                 placeholder="Enter Name..."
                 onChange={handleOnChange}
               />
@@ -77,7 +79,7 @@ const Signup = () => {
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#007bff]"
                 id="email"
                 type="text"
-                value={formData.email}
+                value={signupForm.email}
                 placeholder="Enter Email..."
                 onChange={handleOnChange}
               />
@@ -102,7 +104,7 @@ const Signup = () => {
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#007bff]"
                 id="password"
                 type="password"
-                value={formData.password}
+                value={signupForm.password}
                 placeholder="Enter Password..."
                 onChange={handleOnChange}
               />
@@ -124,7 +126,21 @@ const Signup = () => {
             <div>
               <p>
                 Already have an account?{" "}
-                <span>
+                <span
+                  onClick={() => {
+                    setErrors({
+                      name: "",
+                      email: "",
+                      password: "",
+                      file: "",
+                    });
+                    setSignupForm({
+                      name: "",
+                      email: "",
+                      password: "",
+                    });
+                  }}
+                >
                   <Link to="/" className="underline text-blue-700">
                     Login
                   </Link>

@@ -7,22 +7,13 @@ import Actor from "../../assets/actor.png";
 function useSignup() {
   const navigate = useNavigate();
   const base_url = import.meta.env.VITE_API_BASE_URL;
-  const { setUser } = useAllContexts();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-  const [errors, setErrors] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const { setUser, signupForm, setSignupForm, errors, setErrors } =
+    useAllContexts();
   const [selectedImage, setSelectedImage] = useState(Actor);
 
   const handleOnChange = (e) => {
     const { id, value } = e.target;
-    setFormData((prevData) => ({
+    setSignupForm((prevData) => ({
       ...prevData,
       [id]: value,
     }));
@@ -46,18 +37,16 @@ function useSignup() {
   const userSignup = async (event) => {
     event.preventDefault();
 
-    const validData = validateSignupData(formData, setErrors);
+    const validData = validateSignupData(signupForm, setErrors);
     if (!validData) {
       return;
     }
 
     try {
       const payload = {
-        ...formData,
+        ...signupForm,
         // image: selectedImage,
       };
-
-      console.log("payload = ", payload);
 
       const response = await fetch(`${base_url}/signup`, {
         method: "POST",
@@ -79,7 +68,7 @@ function useSignup() {
         name: result.data.name,
         email: result.data.email,
       });
-      setFormData({ name: "", email: "", password: "" });
+      setSignupForm({ name: "", email: "", password: "" });
       navigate("/home");
     } catch (error) {
       console.error("Error:", error);
@@ -89,9 +78,11 @@ function useSignup() {
   return {
     Link,
     errors,
+    setErrors,
     handleOnChange,
     userSignup,
-    formData,
+    signupForm,
+    setSignupForm,
     selectedImage,
     handleImageChange,
   };
