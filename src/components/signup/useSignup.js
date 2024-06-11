@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { validateSignupData } from "../Validation";
+import { Link, useNavigate } from "react-router-dom";
 import { useAllContexts } from "../../context";
 import Actor from "../../assets/actor.png";
+import { SignupUserService } from "../../services";
 
 function useSignup() {
+  const { signupForm, setSignupForm, errors, setErrors, setUser } =
+    useAllContexts();
   const navigate = useNavigate();
   const base_url = import.meta.env.VITE_API_BASE_URL;
-  const { setUser, signupForm, setSignupForm, errors, setErrors } =
-    useAllContexts();
   const [selectedImage, setSelectedImage] = useState(Actor);
 
   const handleOnChange = (e) => {
@@ -34,45 +34,9 @@ function useSignup() {
     }
   };
 
-  const userSignup = async (event) => {
+  const handleSignup = async (event) => {
     event.preventDefault();
-
-    const validData = validateSignupData(signupForm, setErrors);
-    if (!validData) {
-      return;
-    }
-
-    try {
-      const payload = {
-        ...signupForm,
-        // image: selectedImage,
-      };
-
-      const response = await fetch(`${base_url}/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-      const result = await response.json();
-      if (!result.success) {
-        return setErrors((prevErrors) => ({
-          ...prevErrors,
-          email: result.data,
-        }));
-      }
-      localStorage.setItem("token", result.token);
-      setUser({
-        _id: result.data._id,
-        name: result.data.name,
-        email: result.data.email,
-      });
-      setSignupForm({ name: "", email: "", password: "" });
-      navigate("/home");
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    await SignupUserService(signupForm, setErrors, setUser, navigate, base_url);
   };
 
   return {
@@ -80,11 +44,11 @@ function useSignup() {
     errors,
     setErrors,
     handleOnChange,
-    userSignup,
     signupForm,
     setSignupForm,
     selectedImage,
     handleImageChange,
+    handleSignup,
   };
 }
 

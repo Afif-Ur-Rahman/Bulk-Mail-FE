@@ -27,6 +27,11 @@ export const AllContexts = createContext({
     password: "",
     file: "",
   },
+  searchData: "",
+  form: false,
+  editData: false,
+  checkedItems: [],
+  newId: null,
 });
 
 export const useAllContexts = () => {

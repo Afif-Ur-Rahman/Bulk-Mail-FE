@@ -41,6 +41,11 @@ const App = () => {
     password: "",
     file: "",
   });
+  const [searchData, setSearchData] = useState("");
+  const [form, setForm] = useState(false);
+  const [editData, setEditData] = useState(false);
+  const [checkedItems, setCheckedItems] = useState([]);
+  const [newId, setNewId] = useState(null);
   return (
     <BrowserRouter>
       <AllContextsProvider
@@ -59,6 +64,16 @@ const App = () => {
           setAddDataForm,
           pages,
           setPages,
+          searchData,
+          setSearchData,
+          form,
+          setForm,
+          editData,
+          setEditData,
+          checkedItems,
+          setCheckedItems,
+          newId,
+          setNewId,
         }}
       >
         <Header />

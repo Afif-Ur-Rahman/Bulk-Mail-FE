@@ -6,15 +6,7 @@ import AddData from "../../components/addData/AddData";
 import { AddIcon } from "../../assets/Icons";
 
 const Home = () => {
-  const {
-    filteredData,
-    searchQuery,
-    setSearchQuery,
-    form,
-    setForm,
-    editData,
-    setEditData,
-  } = useHome();
+  const { filteredData, form, setForm, searchData, setSearchData } = useHome();
   return (
     <>
       <div className="flex flex-col">
@@ -31,8 +23,8 @@ const Home = () => {
                       type="text"
                       name="hs-table-search"
                       id="hs-table-search"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
+                      value={searchData}
+                      onChange={(e) => setSearchData(e.target.value)}
                       className="py-2 px-3 pl-9 block w-full border border-gray-300 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                       placeholder="Search"
                     />
@@ -61,21 +53,11 @@ const Home = () => {
                 >
                   <AddIcon />
                 </div>
-                {form && (
-                  <AddData
-                    setForm={setForm}
-                    editData={editData}
-                    setEditData={setEditData}
-                  />
-                )}
+                {form && <AddData />}
               </div>
             </div>
             <div className="overflow-x-auto">
-              <DataTable
-                filteredData={filteredData}
-                setEditData={setEditData}
-                setForm={setForm}
-              />
+              <DataTable filteredData={filteredData} />
             </div>
           </div>
           <div className="flex items-center justify-center mx-auto my-8">

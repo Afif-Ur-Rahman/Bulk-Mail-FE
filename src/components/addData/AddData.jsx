@@ -2,17 +2,19 @@
 import { AddIcon, MenuIcon } from "../../assets/Icons";
 import useAddData from "./useAddData";
 
-const AddData = ({ setForm, editData, setEditData }) => {
+const AddData = () => {
   const {
     handleFileChange,
     handleOnChange,
-    handleUpload,
+    handleUploadData,
     fileInputRef,
     errors,
-    handleEditData,
+    handleUpdateData,
     addDataForm,
     setAddDataForm,
-  } = useAddData(setForm, setEditData);
+    editData,
+    setForm,
+  } = useAddData();
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
@@ -212,9 +214,9 @@ const AddData = ({ setForm, editData, setEditData }) => {
             <button
               className="shadow bg-[#007bff] border-2 border-[#007bff] hover:bg-transparent hover:text-[#007bff] focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-1 transition-all ease-in-out duration-300"
               type="button"
-              onClick={() => (editData ? handleEditData() : handleUpload())}
+              onClick={() => (editData ? handleUpdateData() : handleUploadData())}
             >
-              {editData ? "Edit" : "Add"} Data
+              {editData ? "Update" : "Add"} Data
             </button>
             {!editData && (
               <>

@@ -6,7 +6,7 @@ const Login = () => {
   const {
     Link,
     handleOnChange,
-    userLogin,
+    handleLogin,
     errors,
     setErrors,
     loginForm,
@@ -75,7 +75,7 @@ const Login = () => {
             <button
               className="shadow bg-[#007bff] border-2 border-[#007bff] hover:bg-transparent hover:text-[#007bff] focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-1 transition-all ease-in-out duration-300"
               type="button"
-              onClick={userLogin}
+              onClick={handleLogin}
             >
               Login
             </button>

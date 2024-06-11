@@ -6,11 +6,11 @@ const Signup = () => {
     errors,
     setErrors,
     handleOnChange,
-    userSignup,
     signupForm,
     setSignupForm,
     selectedImage,
     handleImageChange,
+    handleSignup,
   } = useSignup();
 
   return (
@@ -21,7 +21,7 @@ const Signup = () => {
         </h1>
         <form
           className="flex flex-col w-full justify-center items-center mx-auto"
-          onSubmit={userSignup}
+          onSubmit={handleSignup}
         >
           <div>
             <label className="flex items-center justify-center py-3 cursor-pointer rounded-md">

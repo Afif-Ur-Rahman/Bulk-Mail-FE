@@ -1,52 +1,18 @@
 /* eslint-disable react/prop-types */
-import { useAllContexts } from "../../context";
-import { useState, useEffect } from "react";
 import { CheckIcon, CloseIcon, EditIcon } from "../../assets/Icons";
+import useDataTable from "./useDataTable";
+import { UpdateStatusService } from "../../services";
 
-const DataTable = ({ filteredData, setEditData, setForm }) => {
-  const { data, setData, setAddDataForm } = useAllContexts();
-  const base_url = import.meta.env.VITE_API_BASE_URL;
-  const [checkedItems, setCheckedItems] = useState([]);
-
-  useEffect(() => {
-    setCheckedItems(new Array(data.length).fill(false));
-  }, [data]);
-
-  const handleSelectAll = (e) => {
-    const isChecked = e.target.checked;
-    setCheckedItems(new Array(filteredData.length).fill(isChecked));
-  };
-
-  const handleCheckboxChange = (index) => {
-    const updatedCheckedItems = checkedItems.map((item, i) =>
-      i === index ? !item : item
-    );
-    setCheckedItems(updatedCheckedItems);
-  };
-
-  const handleStatusChange = async (id, newStatus) => {
-    try {
-      const response = await fetch(`${base_url}/${id}/status`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ Status: newStatus }),
-      });
-
-      if (response.ok) {
-        const updatedData = data.map((item) =>
-          item._id === id ? { ...item, Status: newStatus } : item
-        );
-        setData(updatedData);
-      } else {
-        console.error("Failed to update status");
-      }
-    } catch (error) {
-      console.error("Error updating status:", error);
-    }
-  };
-
+const DataTable = ({ filteredData }) => {
+  const {
+    handleSelectAll,
+    handleCheckboxChange,
+    checkedItems,
+    data,
+    setData,
+    base_url,
+    handleEditClick,
+  } = useDataTable(filteredData);
   return (
     <table className="min-w-full divide-y divide-gray-200 table-auto overflow-hidden">
       <thead className="bg-gray-50">
@@ -184,22 +150,7 @@ const DataTable = ({ filteredData, setEditData, setForm }) => {
               <div className="flex items-center justify-between">
                 <div
                   className="cursor-pointer"
-                  onClick={() => {
-                    setForm(true);
-                    setEditData(true);
-                    setAddDataForm({
-                      "First Name": item["First Name"],
-                      "Last Name": item["Last Name"],
-                      "Job Title": item["Job Title"],
-                      Company: item.Company,
-                      Email: item.Email,
-                      "Company Phone": item["Company Phone"],
-                      Industry: item.Industry,
-                      City: item.City,
-                      Country: item.Country,
-                      Status: item.Status,
-                    });
-                  }}
+                  onClick={() => handleEditClick(item)}
                 >
                   <EditIcon />
                 </div>
@@ -207,14 +158,30 @@ const DataTable = ({ filteredData, setEditData, setForm }) => {
                   {item.Status === "active" ? (
                     <div
                       className="cursor-pointer"
-                      onClick={() => handleStatusChange(item._id, "inactive")}
+                      onClick={() =>
+                        UpdateStatusService(
+                          item._id,
+                          "inactive",
+                          data,
+                          setData,
+                          base_url
+                        )
+                      }
                     >
                       <CloseIcon />
                     </div>
                   ) : (
                     <div
                       className="cursor-pointer"
-                      onClick={() => handleStatusChange(item._id, "active")}
+                      onClick={() =>
+                        UpdateStatusService(
+                          item._id,
+                          "active",
+                          data,
+                          setData,
+                          base_url
+                        )
+                      }
                     >
                       <CheckIcon />
                     </div>
