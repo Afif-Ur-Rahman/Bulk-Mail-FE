@@ -46,6 +46,12 @@ const App = () => {
   const [editData, setEditData] = useState(false);
   const [checkedItems, setCheckedItems] = useState([]);
   const [newId, setNewId] = useState(null);
+  const [checkedEmails, setCheckedEmails] = useState([]);
+  const [mailForm, setMailForm] = useState({
+    to: [],
+    subject: "",
+    message: "",
+  });
   return (
     <BrowserRouter>
       <AllContextsProvider
@@ -74,6 +80,10 @@ const App = () => {
           setCheckedItems,
           newId,
           setNewId,
+          checkedEmails,
+          setCheckedEmails,
+          mailForm,
+          setMailForm,
         }}
       >
         <Header />

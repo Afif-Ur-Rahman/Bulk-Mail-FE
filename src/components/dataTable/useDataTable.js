@@ -12,6 +12,8 @@ const useDataTable = (filteredData) => {
     checkedItems,
     setCheckedItems,
     setNewId,
+    checkedEmails,
+    setCheckedEmails,
   } = useAllContexts();
   const base_url = import.meta.env.VITE_API_BASE_URL;
 
@@ -22,6 +24,12 @@ const useDataTable = (filteredData) => {
   const handleSelectAll = (e) => {
     const isChecked = e.target.checked;
     setCheckedItems(new Array(filteredData.length).fill(isChecked));
+
+    const newEmails = filteredData.map((item) => item.Email);
+    const updatedCheckedEmails = isChecked
+      ? Array.from(new Set([...checkedEmails, ...newEmails]))
+      : checkedEmails.filter((email) => !newEmails.includes(email));
+    setCheckedEmails(updatedCheckedEmails);
   };
 
   const handleCheckboxChange = (index) => {
@@ -29,6 +37,11 @@ const useDataTable = (filteredData) => {
       i === index ? !item : item
     );
     setCheckedItems(updatedCheckedItems);
+
+    const updatedCheckedEmails = updatedCheckedItems[index]
+      ? [...checkedEmails, filteredData[index].Email]
+      : checkedEmails.filter((email) => email !== filteredData[index].Email);
+    setCheckedEmails(updatedCheckedEmails);
   };
 
   const handleEditClick = (item) => {

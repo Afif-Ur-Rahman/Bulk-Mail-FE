@@ -32,6 +32,12 @@ export const AllContexts = createContext({
   editData: false,
   checkedItems: [],
   newId: null,
+  checkedEmails: [],
+  mailForm: {
+    to: [],
+    subject: "",
+    message: "",
+  },
 });
 
 export const useAllContexts = () => {

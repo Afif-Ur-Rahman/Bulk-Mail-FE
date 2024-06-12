@@ -49,7 +49,7 @@ function Header() {
               <MenuIcon />
             </button>
 
-            <Menu />
+            <Menu setMiniMenu={setMiniMenu} />
           </div>
         )}
 

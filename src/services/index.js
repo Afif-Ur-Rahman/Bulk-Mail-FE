@@ -4,6 +4,7 @@ import UploadDataService from "./api/UploadDataService";
 import GetDataService from "./api/GetDataService";
 import UpdateStatusService from "./api/UpdateStatusService";
 import UpdateDataService from "./api/UpdateDataService";
+import SendMailService from "./api/SendMailService";
 
 export {
   SignupUserService,
@@ -12,4 +13,5 @@ export {
   GetDataService,
   UpdateStatusService,
   UpdateDataService,
+  SendMailService,
 };
