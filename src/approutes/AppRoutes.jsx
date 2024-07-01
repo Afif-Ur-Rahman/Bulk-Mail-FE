@@ -11,25 +11,29 @@ const AppRoutes = () => {
   const [isToken, setIsToken] = useState(!!token);
 
   useEffect(() => {
-    setIsToken(!!token === true ? true : false);
+    setIsToken(!!token);
   }, [token]);
 
   useEffect(() => {
     if (!isToken) {
       navigate("/");
-    } else {
-      navigate("/home");
     }
-  }, []);
-  return (
-    <>
+  }, [isToken, navigate]);
+
+  if (!isToken) {
+    return (
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<Login />} />
-        {isToken && <Route path="/home" element={<Home />} />}
-        <Route path="/emailtemplates" element={<EmailTemplate />} />
       </Routes>
-    </>
+    );
+  }
+
+  return (
+    <Routes>
+      <Route path="/home" element={<Home />} />
+      <Route path="/emailtemplates" element={<EmailTemplate />} />
+    </Routes>
   );
 };
 
