@@ -1,6 +1,5 @@
 const UploadDataService = async (
     selectedFile,
-    setFile,
     addDataForm,
     setAddDataForm,
     pages,
@@ -26,7 +25,6 @@ const UploadDataService = async (
     if (result.success) {
       if (selectedFile && fileInputRef.current) {
         fileInputRef.current.value = "";
-        setFile(null);
       }
       setPages({
         ...pages,

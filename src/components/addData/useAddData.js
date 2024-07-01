@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { useAllContexts } from "../../context";
 import { UpdateDataService, UploadDataService } from "../../services";
 
@@ -18,7 +18,6 @@ const useAddData = () => {
     newId,
   } = useAllContexts();
   const base_url = import.meta.env.VITE_API_BASE_URL;
-  const [file, setFile] = useState(null);
   const fileInputRef = useRef(null);
 
   const handleOnChange = (e) => {
@@ -32,15 +31,13 @@ const useAddData = () => {
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
-      setFile(selectedFile);
       handleUploadData(selectedFile);
     }
   };
 
-  const handleUploadData = async () => {
+  const handleUploadData = async (selectedFile) => {
     await UploadDataService(
-      file,
-      setFile,
+      selectedFile,
       addDataForm,
       setAddDataForm,
       pages,
@@ -62,14 +59,15 @@ const useAddData = () => {
 
   return {
     handleFileChange,
-    errors,
     handleOnChange,
     handleUploadData,
+    fileInputRef,
+    errors,
+    handleUpdateData,
     addDataForm,
     setAddDataForm,
     editData,
     setForm,
-    handleUpdateData,
   };
 };
 
