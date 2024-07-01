@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { Signup, Login } from "../components";
@@ -11,7 +10,7 @@ const AppRoutes = () => {
   const [isToken, setIsToken] = useState(!!token);
 
   useEffect(() => {
-    setIsToken(!!token === true ? true : false);
+    setIsToken(!!token);
   }, [token]);
 
   useEffect(() => {
@@ -20,16 +19,15 @@ const AppRoutes = () => {
     } else {
       navigate("/home");
     }
-  }, []);
+  }, [isToken, navigate]);
+
   return (
-    <>
-      <Routes>
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/" element={<Login />} />
-        {isToken && <Route path="/home" element={<Home />} />}
-        <Route path="/emailtemplates" element={<EmailTemplate />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/" element={<Login />} />
+      {isToken && <Route path="/home" element={<Home />} />}
+      <Route path="/emailtemplates" element={<EmailTemplate />} />
+    </Routes>
   );
 };
 
