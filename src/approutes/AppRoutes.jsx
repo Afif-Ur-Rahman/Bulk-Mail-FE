@@ -17,6 +17,8 @@ const AppRoutes = () => {
   useEffect(() => {
     if (!isToken) {
       navigate("/");
+    } else {
+      navigate("/home");
     }
   }, [isToken, navigate]);
 
