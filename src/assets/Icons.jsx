@@ -90,16 +90,19 @@ function CloseIcon() {
 
 function AddIcon() {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      height="20"
-      width="20"
-      viewBox="0 0 512 512"
-    >
+    <svg height="20" width="20" viewBox="0 0 512 512">
       <path
         d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"
         fill="currentColor"
       />
+    </svg>
+  );
+}
+
+function ActionIcon() {
+  return (
+    <svg height="14" width="3.5" viewBox="0 0 128 512">
+      <path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z" />
     </svg>
   );
 }
@@ -113,4 +116,5 @@ export {
   CheckIcon,
   CloseIcon,
   AddIcon,
+  ActionIcon,
 };

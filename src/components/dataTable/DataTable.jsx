@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { CheckIcon, CloseIcon, EditIcon } from "../../assets/Icons";
+import { ActionIcon } from "../../assets/Icons";
 import useDataTable from "./useDataTable";
 import { UpdateStatusService } from "../../services";
 
@@ -12,7 +12,11 @@ const DataTable = ({ filteredData }) => {
     setData,
     base_url,
     handleEditClick,
+    actions,
+    setActions,
+    handleShowData,
   } = useDataTable(filteredData);
+
   return (
     <table className="min-w-full divide-y divide-gray-200 table-auto overflow-hidden">
       <thead className="bg-gray-50">
@@ -60,6 +64,12 @@ const DataTable = ({ filteredData }) => {
             className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
           >
             Email
+          </th>
+          <th
+            scope="col"
+            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
+          >
+            Email Status
           </th>
           <th
             scope="col"
@@ -116,7 +126,10 @@ const DataTable = ({ filteredData }) => {
                 </label>
               </div>
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+            <td
+              className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium cursor-pointer"
+              onClick={() => handleShowData(item)}
+            >
               {item["First Name"]}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
@@ -130,6 +143,9 @@ const DataTable = ({ filteredData }) => {
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
               <a href={`mailto:${item.Email}`}>{item.Email}</a>
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+              {item["Email Status"]}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
               {item["Company Phone"]}
@@ -146,47 +162,48 @@ const DataTable = ({ filteredData }) => {
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
               {item.Status}
             </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-              <div className="flex items-center justify-between">
-                <div
-                  className="cursor-pointer"
-                  onClick={() => handleEditClick(item)}
-                >
-                  <EditIcon />
-                </div>
+            <td
+              className="px-6 py-4 whitespace-nowrap text-sm text-gray-800"
+              onClick={async () => {
+                const newActions = [...actions];
+                newActions[index] = !newActions[index];
+                setActions(newActions);
+              }}
+            >
+              <div className="flex items-center justify-center">
                 <div>
-                  {item.Status === "active" ? (
-                    <div
-                      className="cursor-pointer"
-                      onClick={() =>
-                        UpdateStatusService(
-                          item._id,
-                          "inactive",
-                          data,
-                          setData,
-                          base_url
-                        )
-                      }
-                    >
-                      <CloseIcon />
-                    </div>
-                  ) : (
-                    <div
-                      className="cursor-pointer"
-                      onClick={() =>
-                        UpdateStatusService(
-                          item._id,
-                          "active",
-                          data,
-                          setData,
-                          base_url
-                        )
-                      }
-                    >
-                      <CheckIcon />
-                    </div>
-                  )}
+                  <ActionIcon />
                 </div>
+                {actions[index] && (
+                  <div className="relative">
+                    <div className="absolute top-0 right-2 w-fit bg-white rounded-md overflow-hidden shadow-xl z-10">
+                      <div
+                        className="cursor-pointer px-4 py-2 hover:bg-gray-100"
+                        onClick={() => handleEditClick(item)}
+                      >
+                        Edit
+                      </div>
+                      <div
+                        className={`cursor-pointer px-4 py-2 hover:bg-gray-100 ${
+                          item.Status === "Active"
+                            ? "text-red-600"
+                            : "text-green-600"
+                        }`}
+                        onClick={() =>
+                          UpdateStatusService(
+                            item._id,
+                            item.Status === "Active" ? "Inactive" : "Active",
+                            data,
+                            setData,
+                            base_url
+                          )
+                        }
+                      >
+                        {item.Status === "Active" ? "Inactive" : "Active"}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </td>
           </tr>

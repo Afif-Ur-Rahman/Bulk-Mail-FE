@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAllContexts } from "../../context";
 
 const useDataTable = (filteredData) => {
@@ -14,8 +14,13 @@ const useDataTable = (filteredData) => {
     setNewId,
     checkedEmails,
     setCheckedEmails,
+    userInfo,
+    setUserInfo,
   } = useAllContexts();
   const base_url = import.meta.env.VITE_API_BASE_URL;
+  const [actions, setActions] = useState(
+    new Array(filteredData.length).fill(false)
+  );
 
   useEffect(() => {
     setCheckedItems(new Array(data.length).fill(false));
@@ -48,18 +53,11 @@ const useDataTable = (filteredData) => {
     setForm(true);
     setEditData(true);
     setNewId(item._id);
-    setAddDataForm({
-      "First Name": item["First Name"],
-      "Last Name": item["Last Name"],
-      "Job Title": item["Job Title"],
-      Company: item.Company,
-      Email: item.Email,
-      "Company Phone": item["Company Phone"],
-      Industry: item.Industry,
-      City: item.City,
-      Country: item.Country,
-      Status: item.Status,
-    });
+    setAddDataForm(item);
+  };
+  const handleShowData = (item) => {
+    setUserInfo(true);
+    setAddDataForm(item);
   };
 
   return {
@@ -71,6 +69,10 @@ const useDataTable = (filteredData) => {
     setData,
     base_url,
     handleEditClick,
+    actions,
+    setActions,
+    userInfo,
+    handleShowData,
   };
 };
 

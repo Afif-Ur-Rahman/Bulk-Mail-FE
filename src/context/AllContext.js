@@ -11,6 +11,7 @@ export const AllContexts = createContext({
     "Job Title": "",
     Company: "",
     Email: "",
+    "Email Status": "",
     "Company Phone": "",
     Industry: "",
     City: "",
@@ -38,6 +39,7 @@ export const AllContexts = createContext({
     subject: "",
     message: "",
   },
+  userInfo: false,
 });
 
 export const useAllContexts = () => {

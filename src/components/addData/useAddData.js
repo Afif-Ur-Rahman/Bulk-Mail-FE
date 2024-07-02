@@ -54,6 +54,18 @@ const useAddData = () => {
   const handleUpdateData = async () => {
     await UpdateDataService(newId, addDataForm, data, setData, base_url);
     setEditData(false);
+    setAddDataForm({
+      "First Name": "",
+      "Last Name": "",
+      "Job Title": "",
+      Company: "",
+      Email: "",
+      "Company Phone": "",
+      Industry: "",
+      City: "",
+      Country: "",
+      Status: "",
+    });
     setForm(false);
   };
 
@@ -67,6 +79,7 @@ const useAddData = () => {
     addDataForm,
     setAddDataForm,
     editData,
+    setEditData,
     setForm,
   };
 };

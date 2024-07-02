@@ -15,6 +15,7 @@ const useHome = () => {
     setSearchData,
     form,
     setForm,
+    userInfo,
   } = useAllContexts();
   const base_url = import.meta.env.VITE_API_BASE_URL;
 
@@ -36,7 +37,6 @@ const useHome = () => {
       item?.Status?.toLowerCase().includes(query)
     );
   });
-  
 
   const handleGetData = async () => {
     await GetDataService(base_url, pages, setPages, setData);
@@ -54,6 +54,7 @@ const useHome = () => {
     setAddDataForm,
     searchData,
     setSearchData,
+    userInfo,
   };
 };
 

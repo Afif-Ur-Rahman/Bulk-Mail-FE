@@ -52,6 +52,7 @@ const App = () => {
     subject: "",
     message: "",
   });
+  const [userInfo, setUserInfo] = useState(false);
   return (
     <BrowserRouter>
       <AllContextsProvider
@@ -84,6 +85,8 @@ const App = () => {
           setCheckedEmails,
           mailForm,
           setMailForm,
+          userInfo,
+          setUserInfo,
         }}
       >
         <Header />

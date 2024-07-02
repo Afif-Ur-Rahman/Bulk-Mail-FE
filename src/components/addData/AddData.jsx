@@ -13,6 +13,7 @@ const AddData = () => {
     addDataForm,
     setAddDataForm,
     editData,
+    setEditData,
     setForm,
   } = useAddData();
 
@@ -37,6 +38,7 @@ const AddData = () => {
               Country: "",
               Status: "",
             });
+            setEditData(false);
             setForm(false);
           }}
           style={{ top: "10px", right: "10px" }}
@@ -214,7 +216,9 @@ const AddData = () => {
             <button
               className="shadow bg-[#007bff] border-2 border-[#007bff] hover:bg-transparent hover:text-[#007bff] focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-1 transition-all ease-in-out duration-300"
               type="button"
-              onClick={() => (editData ? handleUpdateData() : handleUploadData())}
+              onClick={() =>
+                editData ? handleUpdateData() : handleUploadData()
+              }
             >
               {editData ? "Update" : "Add"} Data
             </button>

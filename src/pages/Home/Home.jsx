@@ -1,12 +1,12 @@
 import DataTable from "../../components/dataTable/DataTable";
 import "../../App.css";
 import useHome from "./useHome";
-import { Pagination } from "../../components";
+import { Pagination, ShowData } from "../../components";
 import AddData from "../../components/addData/AddData";
 import { AddIcon } from "../../assets/Icons";
 
 const Home = () => {
-  const { filteredData, form, setForm, searchData, setSearchData } = useHome();
+  const { filteredData, form, setForm, searchData, setSearchData, userInfo } = useHome();
   return (
     <>
       <div className="flex flex-col">
@@ -54,6 +54,7 @@ const Home = () => {
                   <AddIcon />
                 </div>
                 {form && <AddData />}
+                {userInfo &&  <ShowData />}
               </div>
             </div>
             <div className="overflow-x-auto">
