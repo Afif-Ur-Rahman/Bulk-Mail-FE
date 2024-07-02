@@ -40,14 +40,3 @@ html {
     transform: translateY(0%) !important;
   }
 }
-
-@media screen and (max-width: 860px) {
-  .search {
-    flex-direction: column;
-  }
-}
-@media screen and (max-width: 560px) {
-  .file {
-    flex-direction: column;
-  }
-}

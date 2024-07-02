@@ -3,10 +3,11 @@ import "../../App.css";
 import useHome from "./useHome";
 import { Pagination, ShowData } from "../../components";
 import AddData from "../../components/addData/AddData";
-import { AddIcon } from "../../assets/Icons";
+import { AddIcon, SearchIcon } from "../../assets/Icons";
 
 const Home = () => {
-  const { filteredData, form, setForm, searchData, setSearchData, userInfo } = useHome();
+  const { filteredData, form, setForm, searchData, setSearchData, userInfo } =
+    useHome();
   return (
     <>
       <div className="flex flex-col">
@@ -29,21 +30,7 @@ const Home = () => {
                       placeholder="Search"
                     />
                     <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none pl-3">
-                      <svg
-                        className="w-4 h-4 text-gray-400"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.3-4.3"></path>
-                      </svg>
+                      <SearchIcon />
                     </div>
                   </div>
                 </div>
@@ -54,7 +41,7 @@ const Home = () => {
                   <AddIcon />
                 </div>
                 {form && <AddData />}
-                {userInfo &&  <ShowData />}
+                {userInfo && <ShowData />}
               </div>
             </div>
             <div className="overflow-x-auto">
