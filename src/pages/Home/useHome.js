@@ -15,7 +15,7 @@ const useHome = () => {
     setSearchData,
     form,
     setForm,
-    userInfo,
+    userInfo, token
   } = useAllContexts();
   const base_url = import.meta.env.VITE_API_BASE_URL;
 
@@ -39,7 +39,7 @@ const useHome = () => {
   });
 
   const handleGetData = async () => {
-    await GetDataService(base_url, pages, setPages, setData);
+    await GetDataService(base_url, pages, setPages, setData, token);
   };
 
   useEffect(() => {

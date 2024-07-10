@@ -1,9 +1,17 @@
-const UpdateStatusService = async (id, newStatus, data, setData, base_url) => {
+const UpdateStatusService = async (
+  id,
+  newStatus,
+  data,
+  setData,
+  base_url,
+  token
+) => {
   try {
     const response = await fetch(`${base_url}/${id}/status`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: token,
       },
       body: JSON.stringify({ Status: newStatus }),
     });

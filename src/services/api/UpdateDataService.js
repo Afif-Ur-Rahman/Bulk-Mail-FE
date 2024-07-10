@@ -3,13 +3,15 @@ const UpdateDataService = async (
   addDataForm,
   data,
   setData,
-  base_url
+  base_url,
+  token
 ) => {
   try {
     const response = await fetch(`${base_url}/${id}/updatedata`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: token,
       },
       body: JSON.stringify({ addDataForm }),
     });

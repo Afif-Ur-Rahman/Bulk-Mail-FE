@@ -4,7 +4,7 @@ import { SendMailService } from "../services";
 import { MenuIcon } from "../assets/Icons";
 
 function MailForm({ setSendMail }) {
-  const { checkedEmails, mailForm, setMailForm } = useAllContexts();
+  const { checkedEmails, mailForm, setMailForm, token } = useAllContexts();
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const handleOnChange = (e) => {
     e.preventDefault();
@@ -83,7 +83,7 @@ function MailForm({ setSendMail }) {
               className="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-all duration-300"
               type="button"
               onClick={() => {
-                SendMailService(mailForm, base_url);
+                SendMailService(mailForm, base_url, token);
                 setSendMail(false);
               }}
             >

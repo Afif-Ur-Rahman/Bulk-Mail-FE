@@ -16,6 +16,7 @@ const useAddData = () => {
     editData,
     setEditData,
     newId,
+    token,
   } = useAllContexts();
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const fileInputRef = useRef(null);
@@ -47,12 +48,13 @@ const useAddData = () => {
       setErrors,
       setForm,
       fileInputRef,
-      base_url
+      base_url,
+      token
     );
   };
 
   const handleUpdateData = async () => {
-    await UpdateDataService(newId, addDataForm, data, setData, base_url);
+    await UpdateDataService(newId, addDataForm, data, setData, base_url, token);
     setEditData(false);
     setAddDataForm({
       "First Name": "",

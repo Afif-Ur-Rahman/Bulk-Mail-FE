@@ -5,7 +5,8 @@ const SignupUserService = async (
   setErrors,
   setUser,
   navigate,
-  base_url
+  base_url,
+  setIsAuthenticated
 ) => {
   const validData = validateSignupData(signupForm, setErrors);
   if (!validData) {
@@ -33,6 +34,7 @@ const SignupUserService = async (
       }));
     }
     localStorage.setItem("token", result.token);
+    setIsAuthenticated(true);
     setUser({
       _id: result.data._id,
       name: result.data.name,

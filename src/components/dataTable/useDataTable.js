@@ -16,6 +16,7 @@ const useDataTable = (filteredData) => {
     setCheckedEmails,
     userInfo,
     setUserInfo,
+    token,
   } = useAllContexts();
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const [actions, setActions] = useState(
@@ -73,6 +74,7 @@ const useDataTable = (filteredData) => {
     setActions,
     userInfo,
     handleShowData,
+    token,
   };
 };
 

@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { LoginUserService } from "../../services";
 
 function useLogin() {
-  const { loginForm, setLoginForm, errors, setErrors, setUser } = useAllContexts();
+  const { loginForm, setLoginForm, errors, setErrors, setUser, setIsAuthenticated } = useAllContexts();
   const navigate = useNavigate();
   const base_url = import.meta.env.VITE_API_BASE_URL;
 
@@ -21,7 +21,7 @@ function useLogin() {
   };
 
   const handleLogin = async () => {
-    await LoginUserService(loginForm, setErrors, setUser, navigate, base_url);
+    await LoginUserService(loginForm, setErrors, setUser, navigate, base_url, setIsAuthenticated);
   };
 
   return {

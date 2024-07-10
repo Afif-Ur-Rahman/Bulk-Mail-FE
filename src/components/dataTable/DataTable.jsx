@@ -15,10 +15,11 @@ const DataTable = ({ filteredData }) => {
     actions,
     setActions,
     handleShowData,
+    token,
   } = useDataTable(filteredData);
 
   return (
-    <table className="min-w-full divide-y divide-gray-200 table-auto overflow-hidden">
+    <table className="min-w-full divide-y divide-gray-200 table-auto overflow-hidden h-fit">
       <thead className="bg-gray-50">
         <tr>
           <th scope="col" className="py-3 px-4 pe-0">
@@ -195,7 +196,8 @@ const DataTable = ({ filteredData }) => {
                             item.Status === "Active" ? "Inactive" : "Active",
                             data,
                             setData,
-                            base_url
+                            base_url,
+                            token
                           )
                         }
                       >
