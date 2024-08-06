@@ -1,4 +1,10 @@
-const GetDataService = async (base_url, pages, setPages, setData, token) => {
+const GetDataService = async (
+  base_url,
+  pages,
+  setPages,
+  setData,
+  token,
+) => {
   try {
     const response = await fetch(`${base_url}/getdata?page=${pages.page}`, {
       method: "GET",

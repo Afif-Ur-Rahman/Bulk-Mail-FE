@@ -1,12 +1,8 @@
-/* eslint-disable react/prop-types */
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
-const ProtectedRoute = ({ Component, isAuthenticated, ...rest }) => {
-  return isAuthenticated ? (
-    <Component {...rest} />
-  ) : (
-    <Navigate to="/" replace />
-  );
+const ProtectedRoutes = () => {
+  const authToken = localStorage.getItem("token");
+  return authToken ? <Outlet /> : <Navigate to={"/"} />;
 };
 
-export default ProtectedRoute;
+export default ProtectedRoutes;

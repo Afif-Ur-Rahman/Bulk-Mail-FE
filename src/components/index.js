@@ -6,6 +6,7 @@ import Header from "./header/Header";
 import DataTable from "./dataTable/DataTable";
 import MailForm from "./MailForm";
 import ShowData from "./showData/ShowData";
+import MailTemplate from "./addMailTemplates/AddMailTemplates";
 
 export {
   Signup,
@@ -16,4 +17,5 @@ export {
   DataTable,
   MailForm,
   ShowData,
+  MailTemplate,
 };

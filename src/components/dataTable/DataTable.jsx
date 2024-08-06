@@ -19,7 +19,7 @@ const DataTable = ({ filteredData }) => {
   } = useDataTable(filteredData);
 
   return (
-    <table className="min-w-full divide-y divide-gray-200 table-auto overflow-hidden h-fit">
+    <table className="min-w-full divide-y divide-gray-200 table-auto overflow-hidden pb-4">
       <thead className="bg-gray-50">
         <tr>
           <th scope="col" className="py-3 px-4 pe-0">

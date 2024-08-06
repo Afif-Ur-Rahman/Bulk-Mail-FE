@@ -6,6 +6,7 @@ export const AllContexts = createContext();
 export const AllContextsProvider = ({ children }) => {
   const [user, setUser] = useState({ _id: "", name: "", email: "", image: "" });
   const [data, setData] = useState([]);
+  const [mailTemplatesData, setMailTemplatesData] = useState([]);
   const [signupForm, setSignupForm] = useState({
     name: "",
     email: "",
@@ -50,7 +51,10 @@ export const AllContextsProvider = ({ children }) => {
   });
   const [userInfo, setUserInfo] = useState(false);
   const token = localStorage.getItem("token");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [mailTemplate, setMailTemplate] = useState({
+    subject: "",
+    message: "",
+  });
 
   return (
     <AllContexts.Provider
@@ -86,8 +90,10 @@ export const AllContextsProvider = ({ children }) => {
         userInfo,
         setUserInfo,
         token,
-        isAuthenticated,
-        setIsAuthenticated
+        mailTemplate,
+        setMailTemplate,
+        mailTemplatesData,
+        setMailTemplatesData,
       }}
     >
       {children}
