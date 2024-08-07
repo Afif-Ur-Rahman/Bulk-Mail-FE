@@ -3,6 +3,7 @@ const AddMailTemplateService = async (
   base_url,
   token,
   setMail,
+  mailTemplatesData,
   setMailTemplatesData
 ) => {
   try {
@@ -18,7 +19,7 @@ const AddMailTemplateService = async (
     console.log("result = ", result);
 
     if (result.success) {
-      setMailTemplatesData(result.data);
+      setMailTemplatesData([result.data, ...mailTemplatesData]);
       setMail(false);
     } else {
       console.error("Failed to Save Mail:", result.error);

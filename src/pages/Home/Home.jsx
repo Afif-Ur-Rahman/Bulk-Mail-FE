@@ -1,10 +1,10 @@
-import { useState } from "react";
 import DataTable from "../../components/dataTable/DataTable";
 import "../../App.css";
 import useHome from "./useHome";
-import { Pagination, ShowData, MailForm } from "../../components";
+import { Pagination, ShowData } from "../../components";
 import AddData from "../../components/addData/AddData";
 import { AddIcon, SearchIcon } from "../../assets/Icons";
+import { SendMailService } from "../../services";
 
 const Home = () => {
   const {
@@ -14,9 +14,12 @@ const Home = () => {
     searchData,
     setSearchData,
     userInfo,
-    checkedEmails,
+    mailForm,
+    base_url,
+    token,
+    setMailForm,
+    setCheckedItems,
   } = useHome();
-  const [sendMail, setSendMail] = useState(false);
   return (
     <>
       <div className="flex flex-col">
@@ -45,15 +48,21 @@ const Home = () => {
                 </div>
                 <div className="flex">
                   <div>
-                  {checkedEmails?.length !== 0 && (
-                    <button
-                      className="shadow bg-[#007bff] border-2 border-[#007bff] hover:bg-transparent hover:text-[#007bff] focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-1 transition-all ease-in-out duration-300"
-                      type="button"
-                      onClick={() => setSendMail(true)}
-                    >
-                      Send Mail
-                    </button>
-                  )}
+                    {mailForm?.to?.length !== 0 &&
+                      mailForm?.subject !== "" &&
+                      mailForm?.message !== "" && (
+                        <button
+                          className="shadow bg-[#007bff] border-2 border-[#007bff] hover:bg-transparent hover:text-[#007bff] focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-1 transition-all ease-in-out duration-300"
+                          type="button"
+                          onClick={() => {
+                            SendMailService(mailForm, base_url, token);
+                            setMailForm({ to: [], subject: "", message: "" });
+                            setCheckedItems([]);
+                          }}
+                        >
+                          Send Mail
+                        </button>
+                      )}
                   </div>
                   <div
                     className="cursor-pointer flex items-center hover:text-[#007bff] transition-all"
@@ -64,7 +73,6 @@ const Home = () => {
                 </div>
                 {form && <AddData />}
                 {userInfo && <ShowData />}
-                {sendMail && <MailForm setSendMail={setSendMail} />}
               </div>
             </div>
             <div className="overflow-x-auto">

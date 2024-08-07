@@ -14,6 +14,7 @@ const useDataTable = (filteredData) => {
     setNewId,
     checkedEmails,
     setCheckedEmails,
+    setMailForm,
     userInfo,
     setUserInfo,
     token,
@@ -24,8 +25,11 @@ const useDataTable = (filteredData) => {
   );
 
   useEffect(() => {
-    setCheckedItems(new Array(data.length).fill(false));
-  }, [data]);
+    const initialCheckedItems = filteredData.map(item =>
+      checkedEmails.includes(item.Email)
+    );
+    setCheckedItems(initialCheckedItems);
+  }, [data, checkedEmails]);
 
   const handleSelectAll = (e) => {
     const isChecked = e.target.checked;
@@ -36,6 +40,7 @@ const useDataTable = (filteredData) => {
       ? Array.from(new Set([...checkedEmails, ...newEmails]))
       : checkedEmails.filter((email) => !newEmails.includes(email));
     setCheckedEmails(updatedCheckedEmails);
+    setMailForm((prevdata) => ({...prevdata, to: updatedCheckedEmails}));
   };
 
   const handleCheckboxChange = (index) => {
@@ -48,6 +53,7 @@ const useDataTable = (filteredData) => {
       ? [...checkedEmails, filteredData[index].Email]
       : checkedEmails.filter((email) => email !== filteredData[index].Email);
     setCheckedEmails(updatedCheckedEmails);
+    setMailForm((prevdata) => ({...prevdata, to: updatedCheckedEmails}));
   };
 
   const handleEditClick = (item) => {

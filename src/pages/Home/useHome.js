@@ -17,7 +17,9 @@ const useHome = () => {
     setForm,
     userInfo,
     token,
-    checkedEmails,
+    mailForm,
+    setMailForm,
+    setCheckedItems,
   } = useAllContexts();
   const base_url = import.meta.env.VITE_API_BASE_URL;
 
@@ -57,7 +59,11 @@ const useHome = () => {
     searchData,
     setSearchData,
     userInfo,
-    checkedEmails,
+    mailForm,
+    base_url,
+    token,
+    setMailForm,
+    setCheckedItems,
   };
 };
 

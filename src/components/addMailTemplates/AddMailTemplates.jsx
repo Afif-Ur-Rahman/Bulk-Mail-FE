@@ -3,8 +3,13 @@ import { useAllContexts } from "../../context";
 import { AddMailTemplateService } from "../../services";
 
 function MailTemplate({ setMail }) {
-  const { setMailTemplatesData, mailTemplate, setMailTemplate, token } =
-    useAllContexts();
+  const {
+    mailTemplatesData,
+    setMailTemplatesData,
+    mailTemplate,
+    setMailTemplate,
+    token,
+  } = useAllContexts();
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const handleOnChange = (e) => {
     e.preventDefault();
@@ -59,6 +64,7 @@ function MailTemplate({ setMail }) {
                   base_url,
                   token,
                   setMail,
+                  mailTemplatesData,
                   setMailTemplatesData
                 );
               }}

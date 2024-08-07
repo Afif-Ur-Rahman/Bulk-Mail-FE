@@ -4,7 +4,6 @@ import { Pagination } from "./Pagination";
 import PassChange from "./passChange/PassChange";
 import Header from "./header/Header";
 import DataTable from "./dataTable/DataTable";
-import MailForm from "./MailForm";
 import ShowData from "./showData/ShowData";
 import MailTemplate from "./addMailTemplates/AddMailTemplates";
 
@@ -15,7 +14,6 @@ export {
   PassChange,
   Header,
   DataTable,
-  MailForm,
   ShowData,
   MailTemplate,
 };
