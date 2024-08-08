@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { useAllContexts } from "../../context";
-import { GetTemplateService } from "../../services";
+import { GetTemplateService, DeleteMailTemplateService } from "../../services";
 import { useNavigate } from "react-router-dom";
 
 const useEmailTemplate = () => {
@@ -14,6 +14,8 @@ const useEmailTemplate = () => {
     setSearchData,
     token,
     setMailForm,
+    setMailTemplate,
+    setTemplateId,
   } = useAllContexts();
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
@@ -42,6 +44,12 @@ const useEmailTemplate = () => {
     setSearchData,
     setMailForm,
     navigate,
+    setMailTemplate,
+    setTemplateId,
+    token,
+    DeleteMailTemplateService,
+    base_url,
+    setMailTemplatesData,
   };
 };
 

@@ -51,10 +51,7 @@ export const AllContextsProvider = ({ children }) => {
   });
   const [userInfo, setUserInfo] = useState(false);
   const token = localStorage.getItem("token");
-  const [mailTemplate, setMailTemplate] = useState({
-    subject: "",
-    message: "",
-  });
+  const [templateId, setTemplateId] = useState(null);
 
   return (
     <AllContexts.Provider
@@ -90,10 +87,10 @@ export const AllContextsProvider = ({ children }) => {
         userInfo,
         setUserInfo,
         token,
-        mailTemplate,
-        setMailTemplate,
         mailTemplatesData,
         setMailTemplatesData,
+        templateId,
+        setTemplateId,
       }}
     >
       {children}

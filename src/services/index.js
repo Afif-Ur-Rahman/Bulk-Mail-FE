@@ -7,6 +7,8 @@ import UpdateDataService from "./api/UpdateDataService";
 import SendMailService from "./api/SendMailService";
 import AddMailTemplateService from "./api/AddMailTemplateService";
 import GetTemplateService from "./api/GetTemplatesService";
+import UpdateMailTemplateService from "./api/UpdateMailTemplateService";
+import DeleteMailTemplateService from "./api/DeleteMailTemplateService";
 
 export {
   SignupUserService,
@@ -18,4 +20,6 @@ export {
   SendMailService,
   AddMailTemplateService,
   GetTemplateService,
+  UpdateMailTemplateService,
+  DeleteMailTemplateService,
 };

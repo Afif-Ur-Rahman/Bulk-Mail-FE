@@ -1,20 +1,25 @@
 /* eslint-disable react/prop-types */
 import { useAllContexts } from "../../context";
-import { AddMailTemplateService } from "../../services";
+import {
+  AddMailTemplateService,
+  UpdateMailTemplateService,
+} from "../../services";
 
 function MailTemplate({ setMail }) {
   const {
     mailTemplatesData,
     setMailTemplatesData,
-    mailTemplate,
-    setMailTemplate,
+    mailForm,
+    setMailForm,
     token,
+    templateId,
+    setTemplateId,
   } = useAllContexts();
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const handleOnChange = (e) => {
     e.preventDefault();
     const { id, value } = e.target;
-    setMailTemplate((prevData) => ({
+    setMailForm((prevData) => ({
       ...prevData,
       [id]: value,
     }));
@@ -36,6 +41,7 @@ function MailTemplate({ setMail }) {
               id="subject"
               type="text"
               placeholder="Email subject"
+              value={mailForm.subject}
               onChange={(e) => handleOnChange(e)}
             />
           </div>
@@ -51,6 +57,7 @@ function MailTemplate({ setMail }) {
               id="message"
               rows="6"
               placeholder="Your message"
+              value={mailForm.message}
               onChange={(e) => handleOnChange(e)}
             />
           </div>
@@ -59,21 +66,42 @@ function MailTemplate({ setMail }) {
               className="shadow bg-[#007bff] border-2 border-[#007bff] hover:bg-transparent hover:text-[#007bff] focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-1 transition-all ease-in-out duration-300"
               type="button"
               onClick={() => {
-                AddMailTemplateService(
-                  mailTemplate,
-                  base_url,
-                  token,
-                  setMail,
-                  mailTemplatesData,
-                  setMailTemplatesData
-                );
+                templateId
+                  ? UpdateMailTemplateService(
+                      mailForm,
+                      base_url,
+                      token,
+                      setMail,
+                      mailTemplatesData,
+                      setMailTemplatesData,
+                      templateId,
+                      setTemplateId
+                    )
+                  : AddMailTemplateService(
+                      mailForm,
+                      base_url,
+                      token,
+                      setMail,
+                      mailTemplatesData,
+                      setMailTemplatesData
+                    );
+                setMailForm((prevData) => ({
+                  ...prevData,
+                  subject: "",
+                  message: "",
+                }));
               }}
             >
-              Save Template
+              {templateId ? "Update" : "Save"} Template
             </button>
             <button
               className="shadow bg-[#007bff] border-2 border-[#007bff] hover:bg-transparent hover:text-[#007bff] focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-1 transition-all ease-in-out duration-300"
               onClick={() => {
+                setMailForm((prevData) => ({
+                  ...prevData,
+                  subject: "",
+                  message: "",
+                }));
                 setMail(false);
               }}
             >

@@ -18,96 +18,43 @@ const DataTable = ({ filteredData }) => {
     token,
   } = useDataTable(filteredData);
 
+  const tableHeadings = [
+    "Checkbox",
+    "First Name",
+    "Last Name",
+    "Job Title",
+    "Company",
+    "Email",
+    "Email Status",
+    "Company Number",
+    "Industry",
+    "City",
+    "Country",
+    "Status",
+    "Actions",
+  ];
+
   return (
     <table className="min-w-full divide-y divide-gray-200 table-auto overflow-hidden pb-4">
       <thead className="bg-gray-50">
         <tr>
-          <th scope="col" className="py-3 px-4 pe-0">
-            <div className="flex items-center h-5">
-              <input
-                id="hs-table-search-checkbox-all"
-                type="checkbox"
-                className="border-gray-200 rounded text-blue-600 focus:ring-blue-500"
-                onChange={handleSelectAll}
-                checked={checkedItems.every(Boolean)}
-              />
-              <label htmlFor="hs-table-search-checkbox-all" className="sr-only">
-                Checkbox
-              </label>
-            </div>
-          </th>
-          <th
-            scope="col"
-            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
-          >
-            First Name
-          </th>
-          <th
-            scope="col"
-            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
-          >
-            Last Name
-          </th>
-          <th
-            scope="col"
-            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
-          >
-            Job Title
-          </th>
-          <th
-            scope="col"
-            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
-          >
-            Company
-          </th>
-          <th
-            scope="col"
-            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
-          >
-            Email
-          </th>
-          <th
-            scope="col"
-            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
-          >
-            Email Status
-          </th>
-          <th
-            scope="col"
-            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
-          >
-            Company Number
-          </th>
-          <th
-            scope="col"
-            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
-          >
-            Industry
-          </th>
-          <th
-            scope="col"
-            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
-          >
-            City
-          </th>
-          <th
-            scope="col"
-            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
-          >
-            Country
-          </th>
-          <th
-            scope="col"
-            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
-          >
-            Status
-          </th>
-          <th
-            scope="col"
-            className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase"
-          >
-            Actions
-          </th>
+          {tableHeadings.map((item, index) => (
+            <th scope="col" className="py-3 px-4 pe-0" key={index}>
+              {item === "Checkbox" ? (
+                <div className="flex items-center h-5">
+                  <input
+                    id="hs-table-search-checkbox-all"
+                    type="checkbox"
+                    className="border-gray-200 rounded text-blue-600 focus:ring-blue-500"
+                    onChange={handleSelectAll}
+                    checked={checkedItems.every(Boolean)}
+                  />
+                </div>
+              ) : (
+                item
+              )}
+            </th>
+          ))}
         </tr>
       </thead>
       <tbody className="divide-y divide-gray-200">

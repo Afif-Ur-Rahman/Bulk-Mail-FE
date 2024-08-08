@@ -1,11 +1,26 @@
 import { useState } from "react";
 import { MailTemplate } from "../../components";
 import useEmailTemplate from "./useEmailTemplate";
-import { ArrowRightIcon, SearchIcon } from "../../assets/Icons";
+import {
+  ArrowRightIcon,
+  DeleteIcon,
+  EditIcon,
+  SearchIcon,
+} from "../../assets/Icons";
 
 const EmailTemplate = () => {
-  const { filteredData, searchData, setSearchData, setMailForm, navigate } =
-    useEmailTemplate();
+  const {
+    filteredData,
+    searchData,
+    setSearchData,
+    setMailForm,
+    navigate,
+    setTemplateId,
+    token,
+    DeleteMailTemplateService,
+    base_url,
+    setMailTemplatesData,
+  } = useEmailTemplate();
   const [mail, setMail] = useState(false);
 
   return (
@@ -50,9 +65,40 @@ const EmailTemplate = () => {
                   key={index}
                   className="p-4 bg-gray-200 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-fit"
                 >
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    {item.subject}
-                  </h5>
+                  <div className="flex justify-between items-center">
+                    <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                      {item.subject}
+                    </h5>
+                    <div className="flex justify-between items-center mr-2">
+                      <div
+                        className="mr-1 cursor-pointer"
+                        onClick={() => {
+                          setTemplateId(item._id);
+                          setMailForm((prevdata) => ({
+                            ...prevdata,
+                            subject: item.subject,
+                            message: item.message,
+                          }));
+                          setMail(true);
+                        }}
+                      >
+                        <EditIcon />
+                      </div>
+                      <div
+                        className="ml-1 cursor-pointer"
+                        onClick={() =>
+                          DeleteMailTemplateService(
+                            item._id,
+                            token,
+                            base_url,
+                            setMailTemplatesData
+                          )
+                        }
+                      >
+                        <DeleteIcon />
+                      </div>
+                    </div>
+                  </div>
                   <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                     {item.message}
                   </p>
