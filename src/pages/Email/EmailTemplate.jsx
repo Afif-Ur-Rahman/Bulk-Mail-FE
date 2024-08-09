@@ -13,6 +13,7 @@ const EmailTemplate = () => {
     filteredData,
     searchData,
     setSearchData,
+    mailForm,
     setMailForm,
     navigate,
     setTemplateId,
@@ -51,8 +52,13 @@ const EmailTemplate = () => {
                 </div>
 
                 <button
-                  className="shadow bg-[#007bff] border-2 border-[#007bff] hover:bg-transparent hover:text-[#007bff] focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-1 transition-all ease-in-out duration-300"
+                  className={`flex justify-center items-center shadow bg-[#007bff] border-2 border-[#007bff] ${
+                    !mailForm?.subject
+                      ? "hover:bg-transparent hover:text-[#007bff]"
+                      : "opacity-50"
+                  } focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-1 transition-all ease-in-out duration-300`}
                   onClick={() => setMail(true)}
+                  disabled={mailForm?.subject}
                 >
                   Add Template
                 </button>
@@ -104,8 +110,16 @@ const EmailTemplate = () => {
                   </p>
                   <div className="flex justify-center items-center">
                     <button
-                      className="flex justify-center items-center shadow bg-[#007bff] border-2 border-[#007bff] hover:bg-transparent hover:text-[#007bff] focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-1 transition-all ease-in-out duration-300"
-                      onClick={() => {
+                      className={`flex justify-center items-center shadow bg-[#007bff] border-2 border-[#007bff] ${
+                        mailForm?.subject !== item.subject
+                          ? "hover:bg-transparent hover:text-[#007bff]"
+                          : "opacity-50"
+                      } focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-1 transition-all ease-in-out duration-300`}
+                      onClick={() => { mailForm?.subject === item.subject ? setMailForm((prevdata) => ({
+                        ...prevdata,
+                        subject: "",
+                        message: "",
+                      })) :
                         setMailForm((prevdata) => ({
                           ...prevdata,
                           subject: item.subject,
@@ -113,9 +127,29 @@ const EmailTemplate = () => {
                         }));
                         navigate("/home");
                       }}
+                      disabled={mailForm?.subject === item.subject}
                     >
-                      Select <ArrowRightIcon />
+                      {mailForm?.subject === item.subject
+                        ? "Selected"
+                        : "Select"}{" "}
+                      <ArrowRightIcon />
                     </button>
+                    {mailForm?.subject === item.subject && (
+                      <button
+                        className="flex justify-center items-center shadow bg-[#007bff] border-2 border-[#007bff]
+                        hover:bg-transparent hover:text-[#007bff]
+                      focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-1 transition-all ease-in-out duration-300"
+                        onClick={() =>
+                          setMailForm((prevdata) => ({
+                            ...prevdata,
+                            subject: "",
+                            message: "",
+                          }))
+                        }
+                      >
+                        Cancel
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}

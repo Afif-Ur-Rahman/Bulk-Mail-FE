@@ -16,6 +16,7 @@ const useEmailTemplate = () => {
     setMailForm,
     setMailTemplate,
     setTemplateId,
+    mailForm,
   } = useAllContexts();
   const base_url = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
@@ -50,6 +51,7 @@ const useEmailTemplate = () => {
     DeleteMailTemplateService,
     base_url,
     setMailTemplatesData,
+    mailForm,
   };
 };
 

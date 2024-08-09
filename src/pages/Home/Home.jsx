@@ -19,6 +19,7 @@ const Home = () => {
     token,
     setMailForm,
     setCheckedItems,
+    navigate,
   } = useHome();
   return (
     <>
@@ -63,6 +64,15 @@ const Home = () => {
                           Send Mail
                         </button>
                       )}
+                  </div>
+                  <div>
+                    <button
+                      className="shadow bg-[#007bff] border-2 border-[#007bff] hover:bg-transparent hover:text-[#007bff] focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-1 transition-all ease-in-out duration-300"
+                      type="button"
+                      onClick={() => navigate("/emailtemplates")}
+                    >
+                      {mailForm?.subject === ""? "Select" : "Change"} Template
+                    </button>
                   </div>
                   <div
                     className="cursor-pointer flex items-center hover:text-[#007bff] transition-all"

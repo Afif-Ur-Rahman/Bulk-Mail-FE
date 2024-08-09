@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { useAllContexts } from "../../context";
 import { GetDataService } from "../../services";
+import { useNavigate } from "react-router-dom";
 
 const useHome = () => {
   const {
@@ -22,6 +23,7 @@ const useHome = () => {
     setCheckedItems,
   } = useAllContexts();
   const base_url = import.meta.env.VITE_API_BASE_URL;
+  const navigate = useNavigate();
 
   const filteredData = data.filter((item) => {
     const query = searchData.toLowerCase();
@@ -64,6 +66,7 @@ const useHome = () => {
     token,
     setMailForm,
     setCheckedItems,
+    navigate,
   };
 };
 
